@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Rhyous.Collections</id>
+    <version>1.0.0</version>
+    <title>Rhyous.Collections</title>
+    <authors>Jared Barneck</authors>
+    <owners></owners>
+    <description>Extension to the .NET System.Collections library (C#)</description>
+    <releaseNotes>
+    </releaseNotes>
+    <summary>Extension to the .NET System.Collections library (C#)</summary>
+    <language>en-US</language>
+    <projectUrl>https://github.com/rhyous/Collections</projectUrl>
+    <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
+    <copyright>Copyright Rhyous Publishing LLC 2017</copyright>    
+    <references></references>
+    <tags>List, Collection, Dictionary</tags>
+  </metadata>
+  <files>
+    <file src="lib\" target="lib" />
+    <file src="tools\" target="tools" />
+  </files>
+</package>
