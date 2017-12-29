@@ -48,7 +48,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestModels\TestClass.cs" />
     <Compile Include="Collections\UniqueListTests.cs" />
+    <Compile Include="Collections\TreeTests.cs" />
+    <Compile Include="Collections\ParentedListTests.cs" />
     <Compile Include="Dictionaries\NullSafeDictionaryTests.cs" />
     <Compile Include="Extensions\IEnumerableExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
