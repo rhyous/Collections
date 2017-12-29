@@ -287,3 +287,5 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 /src/NuGet/Rhyous.Collections.NuGet/lib/net461/Rhyous.Collections.dll
+/src/NuGet/Rhyous.Collections.NuGet/Rhyous.Collections.*.nupkg.bak
+/src/NuGet/Rhyous.Collections.NuGet/Rhyous.Collections.*.symbols.nupkg.bak
