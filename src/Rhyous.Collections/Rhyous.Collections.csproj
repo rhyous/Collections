@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\ParentedCollection.cs" />
     <Compile Include="Collections\ParentedList.cs" />
     <Compile Include="Collections\Tree.cs" />
     <Compile Include="Collections\UniqueList.cs" />
