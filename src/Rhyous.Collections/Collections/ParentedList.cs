@@ -17,13 +17,13 @@ namespace Rhyous.Collections
         public ParentedList() { }
         public ParentedList(TParent parent) { Parent = parent; }
 
-        public TParent Parent { get; set; }
+        public virtual TParent Parent { get; set; }
 
-        public int Count => _List.Count;
+        public virtual int Count => _List.Count;
 
-        public bool IsReadOnly => _List.IsReadOnly;
+        public virtual bool IsReadOnly => _List.IsReadOnly;
 
-        public TItem this[int index]
+        public virtual TItem this[int index]
         {
             get { return _List[index]; }
             set
@@ -34,13 +34,13 @@ namespace Rhyous.Collections
             }
         }
         
-        public void Add(TItem item)
+        public virtual void Add(TItem item)
         {
             _List.Add(item);
             item.Parent = Parent;
         }
 
-        public void AddRange(IEnumerable<TItem> items)
+        public virtual void AddRange(IEnumerable<TItem> items)
         {
             ((List<TItem>)_List).AddRange(items);
             foreach (var item in items)
@@ -52,15 +52,15 @@ namespace Rhyous.Collections
             item.Parent = Parent;
         }
 
-        public void Clear() => _List.Clear();
+        public virtual void Clear() => _List.Clear();
 
-        public bool Contains(TItem item) => _List.Contains(item);
+        public virtual bool Contains(TItem item) => _List.Contains(item);
 
-        public void CopyTo(TItem[] array, int arrayIndex) => _List.CopyTo(array, arrayIndex);
+        public virtual void CopyTo(TItem[] array, int arrayIndex) => _List.CopyTo(array, arrayIndex);
 
-        public IEnumerator<TItem> GetEnumerator() => _List.GetEnumerator();
+        public virtual IEnumerator<TItem> GetEnumerator() => _List.GetEnumerator();
 
-        public bool Remove(TItem item)
+        public virtual bool Remove(TItem item)
         {
             var result = _List.Remove(item);
             if (result && !_List.Contains(item))
@@ -70,15 +70,15 @@ namespace Rhyous.Collections
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public int IndexOf(TItem item) => _List.IndexOf(item);
+        public virtual int IndexOf(TItem item) => _List.IndexOf(item);
 
-        public void RemoveAt(int index)
+        public virtual void RemoveAt(int index)
         {
             ConditionallyRemoveParent(index);
             _List.RemoveAt(index);
         }
 
-        internal void ConditionallyRemoveParent(int index)
+        protected internal virtual void ConditionallyRemoveParent(int index)
         {
             if (index >= 0 && index < _List.Count && _List[index] != null)
             {
