@@ -4,6 +4,11 @@ using System.Linq;
 
 namespace Rhyous.Collections
 {
+    /// <summary>
+    /// A list that enforces that all items are unique.     
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <remarks>For items that are not reference equals but should be equals, an Equality comparer can be set.</remarks>
     public class UniqueList<T> : IList<T>
     {
         #region Constructors
