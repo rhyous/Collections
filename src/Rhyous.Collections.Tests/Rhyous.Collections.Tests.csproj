@@ -48,6 +48,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\ParentedList.Object.Tests.cs" />
+    <Compile Include="Extensions\ValueAccessorExtensionsTests.cs" />
     <Compile Include="TestModels\TestClass.cs" />
     <Compile Include="Collections\UniqueListTests.cs" />
     <Compile Include="Collections\TreeTests.cs" />

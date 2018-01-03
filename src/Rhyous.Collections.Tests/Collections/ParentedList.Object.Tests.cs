@@ -4,15 +4,28 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Rhyous.Collections.Tests.Collections
 {
     [TestClass]
-    public class ParentedListTests
+    public class ParentedListObjectTests
     {
+
+        [TestMethod]
+        public void InvalidConstructor()
+        {
+            // Arrange
+            var parent = new TestClass { Id = 0, Name = "Parent" };
+            var item1 = new TestClass { Id = 1, Name = "Item 1" };
+
+            // Act
+            // Assert
+            Assert.ThrowsException<ArgumentException>(() => new ParentedList<TestClass>(parent, "Bogus"));
+        }
+
         [TestMethod]
         public void AddSetsParent()
         {
             // Arrange
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
+            var parentedList = new ParentedList<TestClass>(parent);
 
             // Act
             parentedList.Add(item1);
@@ -28,7 +41,7 @@ namespace Rhyous.Collections.Tests.Collections
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
+            var parentedList = new ParentedList<TestClass>(parent);
 
             // Act
             parentedList.AddRange(new[] { item1, item2 } );
@@ -44,7 +57,7 @@ namespace Rhyous.Collections.Tests.Collections
             // Arrange
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 2, Name = "Item 1" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
+            var parentedList = new ParentedList<TestClass>(parent);
 
             // Act
             parentedList.Insert(0, item1);
@@ -61,7 +74,7 @@ namespace Rhyous.Collections.Tests.Collections
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
+            var parentedList = new ParentedList<TestClass>(parent);
             parentedList.Add(item1);
 
             // Act
@@ -78,7 +91,7 @@ namespace Rhyous.Collections.Tests.Collections
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
+            var parentedList = new ParentedList<TestClass>(parent);
             parentedList.Add(item1);
 
             // Act
@@ -95,7 +108,7 @@ namespace Rhyous.Collections.Tests.Collections
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
+            var parentedList = new ParentedList<TestClass>(parent);
             parentedList.AddRange(new[] { item1, item1 });
 
             // Act
@@ -112,7 +125,7 @@ namespace Rhyous.Collections.Tests.Collections
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
+            var parentedList = new ParentedList<TestClass>(parent);
             parentedList.AddRange(new[] { item1, item2 });
 
             // Act
@@ -128,7 +141,7 @@ namespace Rhyous.Collections.Tests.Collections
             // Arrange
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
+            var parentedList = new ParentedList<TestClass>(parent);
             parentedList.AddRange(new[] { item1, item1 });
 
             // Act
@@ -146,7 +159,7 @@ namespace Rhyous.Collections.Tests.Collections
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
+            var parentedList = new ParentedList<TestClass>(parent);
             parentedList.AddRange(new[] { item1, item2 });
 
             // Act
@@ -162,7 +175,7 @@ namespace Rhyous.Collections.Tests.Collections
             // Arrange
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
+            var parentedList = new ParentedList<TestClass>(parent);
             parentedList.AddRange(new[] { item1, item1 });
 
             // Act
@@ -179,7 +192,7 @@ namespace Rhyous.Collections.Tests.Collections
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
+            var parentedList = new ParentedList<TestClass>(parent);
             parentedList.AddRange(new[] { item1, item2 });
 
             // Act

@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\ParentedList.cs" />
+    <Compile Include="Collections\ParentedList.Object.cs" />
     <Compile Include="Collections\Tree.cs" />
     <Compile Include="Collections\UniqueList.cs" />
     <Compile Include="Dictionaries\IDictionaryDefaultValueProvider.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\NameValueCollectionExtensions.cs" />
+    <Compile Include="Extensions\ValueAccessorExtensions.cs" />
     <Compile Include="Interfaces\IChildren.cs" />
     <Compile Include="Interfaces\IParent.cs" />
     <Compile Include="Interfaces\ITreeable.cs" />

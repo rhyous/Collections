@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Rhyous.Collections
 {
@@ -8,21 +10,36 @@ namespace Rhyous.Collections
     /// A list that automatically sets the parent when an item is added.
     /// </summary>
     /// <typeparam name="TItem">The type of item the list holds.</typeparam>
-    /// <typeparam name="TParent">The type of the parent of all the items.</typeparam>
-    public class ParentedList<TItem, TParent> : IList<TItem>
-        where TItem : IParent<TParent>
+    public class ParentedList<TItem> : IList<TItem>
     {
         internal readonly IList<TItem> _List = new List<TItem>();
 
+        #region Constructors
         public ParentedList() { }
-        public ParentedList(TParent parent) { Parent = parent; }
-        public ParentedList(TParent parent, IEnumerable<TItem> items)
+
+        public ParentedList(object parent, string parentPropertyName = "Parent") : this()
         {
             Parent = parent;
-            AddRange(items);
+            ParentPopertyName = parentPropertyName;
+            if (Type.GetProperty(ParentPopertyName) == null)
+                throw new ArgumentException($"The property {parentPropertyName} must be a valid property of {Type}");
         }
 
-        public virtual TParent Parent { get; set; }
+        public ParentedList(object parent, IEnumerable<TItem> items, string parentPropertyName = "Parent") : this(parent, parentPropertyName)
+        {
+            AddRange(items);
+        }
+        #endregion
+
+        internal Type Type { get {return _Type ?? (_Type = typeof(TItem)); } }
+        private Type _Type;
+
+        internal PropertyInfo PropertyInfo {get { return _PropertyInfo ?? (_PropertyInfo = Type.GetPropertyInfo(ParentPopertyName)); } }
+        private PropertyInfo _PropertyInfo;
+
+        public string ParentPopertyName { get; set; } = "Parent";
+        
+        public virtual object Parent { get; set; }
 
         public virtual int Count => _List.Count;
 
@@ -35,26 +52,29 @@ namespace Rhyous.Collections
             {
                 ConditionallyRemoveParent(index);
                 _List[index] = value;
-                _List[index].Parent = Parent;
+                SetParent(value, Parent);
             }
         }
-        
+
+        internal void SetParent(TItem item, object parent) => PropertyInfo.SetValue(item, parent);
+        internal void RemoveParent(TItem item) => PropertyInfo.SetValue(item, PropertyInfo.PropertyType.GetDefault());
+
         public virtual void Add(TItem item)
         {
             _List.Add(item);
-            item.Parent = Parent;
+            SetParent(item, Parent);
         }
 
         public virtual void AddRange(IEnumerable<TItem> items)
         {
             ((List<TItem>)_List).AddRange(items);
             foreach (var item in items)
-                item.Parent = Parent;
+                SetParent(item, Parent);
         }
-                public void Insert(int index, TItem item)
+        public void Insert(int index, TItem item)
         {
             _List.Insert(index, item);
-            item.Parent = Parent;
+            SetParent(item, Parent);
         }
 
         public virtual void Clear()
@@ -62,7 +82,7 @@ namespace Rhyous.Collections
             foreach (var item in this)
             {
                 if (item != null)
-                    item.Parent = default(TParent);
+                    RemoveParent(item);
             }
             _List.Clear();
         }
@@ -77,7 +97,7 @@ namespace Rhyous.Collections
         {
             var result = _List.Remove(item);
             if (result && !_List.Contains(item))
-                item.Parent = default(TParent);
+                RemoveParent(item);
             return result;
         }
 
@@ -97,7 +117,7 @@ namespace Rhyous.Collections
             {
                 var ids = Enumerable.Range(0, _List.Count).Where(i => _List[i].Equals(_List[index])).ToList();
                 if (ids.Count == 1 && ids[0] == index)
-                    _List[index].Parent = default(TParent);
+                    RemoveParent(_List[index]);
             }
         }
     }
