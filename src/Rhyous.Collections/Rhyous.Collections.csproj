@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\TreeBranch.cs" />
     <Compile Include="Collections\ParentedList.cs" />
     <Compile Include="Collections\ParentedList.Object.cs" />
     <Compile Include="Collections\Tree.cs" />
