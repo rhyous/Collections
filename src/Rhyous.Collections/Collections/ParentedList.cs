@@ -9,10 +9,10 @@ namespace Rhyous.Collections
     /// </summary>
     /// <typeparam name="TItem">The type of item the list holds.</typeparam>
     /// <typeparam name="TParent">The type of the parent of all the items.</typeparam>
-    public class ParentedList<TItem, TParent> : IList<TItem>
+    public class ParentedList<TItem, TParent> : IRangeableList<TItem>
         where TItem : IParent<TParent>
     {
-        internal readonly IList<TItem> _List = new List<TItem>();
+        internal readonly List<TItem> _List = new List<TItem>();
 
         public ParentedList() { }
         public ParentedList(TParent parent) { Parent = parent; }
@@ -26,7 +26,7 @@ namespace Rhyous.Collections
 
         public virtual int Count => _List.Count;
 
-        public virtual bool IsReadOnly => _List.IsReadOnly;
+        public virtual bool IsReadOnly => false;
 
         public virtual TItem this[int index]
         {
@@ -45,13 +45,7 @@ namespace Rhyous.Collections
             item.Parent = Parent;
         }
 
-        public virtual void AddRange(IEnumerable<TItem> items)
-        {
-            ((List<TItem>)_List).AddRange(items);
-            foreach (var item in items)
-                item.Parent = Parent;
-        }
-                public void Insert(int index, TItem item)
+        public void Insert(int index, TItem item)
         {
             _List.Insert(index, item);
             item.Parent = Parent;
@@ -100,5 +94,27 @@ namespace Rhyous.Collections
                     _List[index].Parent = default(TParent);
             }
         }
+
+        #region IRangeableList
+        public virtual void AddRange(IEnumerable<TItem> items)
+        {
+            ListExtensions.AddRange(_List, items, (i) => { i.Parent = Parent; });
+        }
+
+        public void InsertRange(int index, IEnumerable<TItem> items)
+        {
+            ListExtensions.InsertRange(_List, index, items, (i) => { i.Parent = Parent; });
+        }
+
+        public IRangeableList<TItem> GetRange(int index, int count)
+        {
+            return ListExtensions.GetRange(_List, index, count);
+        }
+
+        public void RemoveRange(int index, int count)
+        {
+            ListExtensions.RemoveRange(_List, index, count, (i) => { i.Parent = default(TParent); });
+        }
+        #endregion
     }
 }

@@ -64,13 +64,7 @@ namespace Rhyous.Collections
             _List.Add(item);
             SetParent(item, Parent);
         }
-
-        public virtual void AddRange(IEnumerable<TItem> items)
-        {
-            ((List<TItem>)_List).AddRange(items);
-            foreach (var item in items)
-                SetParent(item, Parent);
-        }
+        
         public void Insert(int index, TItem item)
         {
             _List.Insert(index, item);
@@ -120,5 +114,27 @@ namespace Rhyous.Collections
                     RemoveParent(_List[index]);
             }
         }
+
+        #region IRangeableList
+        public virtual void AddRange(IEnumerable<TItem> items)
+        {
+            ListExtensions.AddRange(_List, items, (i) => { SetParent(i, Parent); });
+        }
+
+        public void InsertRange(int index, IEnumerable<TItem> items)
+        {
+            ListExtensions.InsertRange(_List, index, items, (i) => { SetParent(i, Parent); });
+        }
+
+        public IRangeableList<TItem> GetRange(int index, int count)
+        {
+            return ListExtensions.GetRange(_List, index, count);
+        }
+
+        public void RemoveRange(int index, int count)
+        {
+            ListExtensions.RemoveRange(_List, index, count, RemoveParent);
+        }
+        #endregion
     }
 }

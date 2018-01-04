@@ -202,5 +202,40 @@ namespace Rhyous.Collections.Tests.Collections
             Assert.IsNull(item1.Parent);
             Assert.IsNull(item2.Parent);
         }
+
+        [TestMethod]
+        public void InsertRangeAddsParent()
+        {
+            // Arrange
+            var parent = new TestClass { Id = 0, Name = "Parent" };
+            var item1 = new TestClass { Id = 1, Name = "Item 1" };
+            var item2 = new TestClass { Id = 2, Name = "Item 2" };
+            var parentedList = new ParentedList<TestClass>(parent);
+
+            // Act
+            parentedList.InsertRange(0, new[] { item1, item2 });
+
+            // Assert
+            Assert.AreEqual(parent, item1.Parent);
+            Assert.AreEqual(parent, item2.Parent);
+        }
+
+        [TestMethod]
+        public void RemoveRangeRemovesParent()
+        {
+            // Arrange
+            var parent = new TestClass { Id = 0, Name = "Parent" };
+            var item1 = new TestClass { Id = 1, Name = "Item 1" };
+            var item2 = new TestClass { Id = 2, Name = "Item 2" };
+            var parentedList = new ParentedList<TestClass>(parent);
+            parentedList.AddRange(new[] { item1, item2 });
+
+            // Act
+            parentedList.RemoveRange(0, 2);
+
+            // Assert
+            Assert.IsNull(item1.Parent);
+            Assert.IsNull(item2.Parent);
+        }
     }
 }

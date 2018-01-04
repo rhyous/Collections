@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\ActionableList.cs" />
+    <Compile Include="Collections\RangeableList.cs" />
     <Compile Include="Collections\TreeBranch.cs" />
     <Compile Include="Collections\ParentedList.cs" />
     <Compile Include="Collections\ParentedList.Object.cs" />
@@ -51,9 +53,11 @@
     <Compile Include="Exceptions\DuplicateItemException.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\NameValueCollectionExtensions.cs" />
     <Compile Include="Extensions\ValueAccessorExtensions.cs" />
     <Compile Include="Interfaces\IChildren.cs" />
+    <Compile Include="Interfaces\IRangeableList.cs" />
     <Compile Include="Interfaces\IParent.cs" />
     <Compile Include="Interfaces\ITreeable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

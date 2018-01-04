@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Rhyous.Collections.Tests.Collections
 {
     [TestClass]
-    public class ParentedListTests
+    public class ActionableListObjectTests
     {
         [TestMethod]
         public void AddSetsParent()
@@ -12,45 +12,46 @@ namespace Rhyous.Collections.Tests.Collections
             // Arrange
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
+            bool addActionWasCalled = false;
+            var ActionableList = new ActionableList<TestClass>((i)=> { addActionWasCalled = true; }, null);
 
             // Act
-            parentedList.Add(item1);
+            ActionableList.Add(item1);
 
             // Assert
-            Assert.AreEqual(parent, item1.Parent);
+            Assert.IsTrue(addActionWasCalled);
         }
 
         [TestMethod]
-        public void AddRangeSetsParent()
+        public void AddRangeCallsActionPerItem()
         {
             // Arrange
-            var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
+            int addActionCalls = 0;
+            var ActionableList = new ActionableList<TestClass>((i) => { addActionCalls++; }, null);
 
             // Act
-            parentedList.AddRange(new[] { item1, item2 } );
+            ActionableList.AddRange(new[] { item1, item2 } );
 
             // Assert
-            Assert.AreEqual(parent, item1.Parent);
-            Assert.AreEqual(parent, item2.Parent);
+            Assert.AreEqual(2, addActionCalls);
         }
 
         [TestMethod]
-        public void InsertSetsParent()
+        public void InsertCallsAddAction()
         {
             // Arrange
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 2, Name = "Item 1" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
+            bool addActionWasCalled = false;
+            var ActionableList = new ActionableList<TestClass>((i) => { addActionWasCalled = true; }, null);
 
             // Act
-            parentedList.Insert(0, item1);
+            ActionableList.Insert(0, item1);
 
             // Assert
-            Assert.AreEqual(parent, item1.Parent);
+            Assert.IsTrue(addActionWasCalled);
         }
 
 
@@ -61,11 +62,11 @@ namespace Rhyous.Collections.Tests.Collections
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
-            parentedList.Add(item1);
+            var ActionableList = new ActionableList<TestClass>(parent);
+            ActionableList.Add(item1);
 
             // Act
-            parentedList[0] = item2;
+            ActionableList[0] = item2;
 
             // Assert
             Assert.AreEqual(parent, item2.Parent);
@@ -78,11 +79,11 @@ namespace Rhyous.Collections.Tests.Collections
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
-            parentedList.Add(item1);
+            var ActionableList = new ActionableList<TestClass>(parent);
+            ActionableList.Add(item1);
 
             // Act
-            parentedList[0] = item2;
+            ActionableList[0] = item2;
 
             // Assert
             Assert.IsNull(item1.Parent);
@@ -95,11 +96,11 @@ namespace Rhyous.Collections.Tests.Collections
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
-            parentedList.AddRange(new[] { item1, item1 });
+            var ActionableList = new ActionableList<TestClass>(parent);
+            ActionableList.AddRange(new[] { item1, item1 });
 
             // Act
-            parentedList[1] = item2;
+            ActionableList[1] = item2;
 
             // Assert
             Assert.AreEqual(parent, item1.Parent);
@@ -112,11 +113,11 @@ namespace Rhyous.Collections.Tests.Collections
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
-            parentedList.AddRange(new[] { item1, item2 });
+            var ActionableList = new ActionableList<TestClass>(parent);
+            ActionableList.AddRange(new[] { item1, item2 });
 
             // Act
-            parentedList.RemoveAt(1);
+            ActionableList.RemoveAt(1);
 
             // Assert
             Assert.IsNull(item2.Parent);
@@ -128,11 +129,11 @@ namespace Rhyous.Collections.Tests.Collections
             // Arrange
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
-            parentedList.AddRange(new[] { item1, item1 });
+            var ActionableList = new ActionableList<TestClass>(parent);
+            ActionableList.AddRange(new[] { item1, item1 });
 
             // Act
-            parentedList.RemoveAt(1);
+            ActionableList.RemoveAt(1);
 
             // Assert
             Assert.AreEqual(parent, item1.Parent);
@@ -146,11 +147,11 @@ namespace Rhyous.Collections.Tests.Collections
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
-            parentedList.AddRange(new[] { item1, item2 });
+            var ActionableList = new ActionableList<TestClass>(parent);
+            ActionableList.AddRange(new[] { item1, item2 });
 
             // Act
-            parentedList.Remove(item2);
+            ActionableList.Remove(item2);
 
             // Assert
             Assert.IsNull(item2.Parent);
@@ -162,11 +163,11 @@ namespace Rhyous.Collections.Tests.Collections
             // Arrange
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
-            parentedList.AddRange(new[] { item1, item1 });
+            var ActionableList = new ActionableList<TestClass>(parent);
+            ActionableList.AddRange(new[] { item1, item1 });
 
             // Act
-            parentedList.Remove(item1);
+            ActionableList.Remove(item1);
 
             // Assert
             Assert.AreEqual(parent, item1.Parent);
@@ -179,17 +180,17 @@ namespace Rhyous.Collections.Tests.Collections
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
-            parentedList.AddRange(new[] { item1, item2 });
+            var ActionableList = new ActionableList<TestClass>(parent);
+            ActionableList.AddRange(new[] { item1, item2 });
 
             // Act
-            parentedList.Clear();
+            ActionableList.Clear();
 
             // Assert
             Assert.IsNull(item1.Parent);
             Assert.IsNull(item2.Parent);
         }
-        
+
         [TestMethod]
         public void InsertRangeAddsParent()
         {
@@ -197,10 +198,10 @@ namespace Rhyous.Collections.Tests.Collections
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
+            var ActionableList = new ActionableList<TestClass>(parent);
 
             // Act
-            parentedList.InsertRange(0, new[] { item1, item2 });
+            ActionableList.InsertRange(0, new[] { item1, item2 });
 
             // Assert
             Assert.AreEqual(parent, item1.Parent);
@@ -214,11 +215,11 @@ namespace Rhyous.Collections.Tests.Collections
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var parentedList = new ParentedList<TestClass, TestClass>(parent);
-            parentedList.AddRange(new[] { item1, item2 });
+            var ActionableList = new ActionableList<TestClass>(parent);
+            ActionableList.AddRange(new[] { item1, item2 });
 
             // Act
-            parentedList.RemoveRange(0, 2);
+            ActionableList.RemoveRange(0, 2);
 
             // Assert
             Assert.IsNull(item1.Parent);
