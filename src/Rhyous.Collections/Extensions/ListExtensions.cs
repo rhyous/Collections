@@ -58,6 +58,14 @@ namespace Rhyous.Collections
             }
         }
 
+        public static void SetIndex<T>(this IList<T> list, int index, T item, Action<T> onAddAction = null, Action<T> onRemoveAction = null)
+        {
+            var removedItem = list[index];
+            list[index] = item;
+            onAddAction?.Invoke(item);
+            onRemoveAction?.Invoke(removedItem);
+        }
+
         public static void InsertRange<T>(this IList<T> list, int index, IEnumerable<T> items, Action<T> onAddAction)
         {
             ListIsNotNull(list, "list");

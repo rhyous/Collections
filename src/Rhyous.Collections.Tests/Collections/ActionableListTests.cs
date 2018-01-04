@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Rhyous.Collections.Tests.Collections
 {
@@ -7,10 +6,9 @@ namespace Rhyous.Collections.Tests.Collections
     public class ActionableListObjectTests
     {
         [TestMethod]
-        public void AddSetsParent()
+        public void AddCallsAddAction()
         {
             // Arrange
-            var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             bool addActionWasCalled = false;
             var ActionableList = new ActionableList<TestClass>((i)=> { addActionWasCalled = true; }, null);
@@ -42,7 +40,6 @@ namespace Rhyous.Collections.Tests.Collections
         public void InsertCallsAddAction()
         {
             // Arrange
-            var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 2, Name = "Item 1" };
             bool addActionWasCalled = false;
             var ActionableList = new ActionableList<TestClass>((i) => { addActionWasCalled = true; }, null);
@@ -56,174 +53,135 @@ namespace Rhyous.Collections.Tests.Collections
 
 
         [TestMethod]
-        public void IndexerSetsParent()
+        public void IndexerCallsAddAction()
         {
             // Arrange
-            var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var ActionableList = new ActionableList<TestClass>(parent);
+            int addActionCalls = 0;
+            var ActionableList = new ActionableList<TestClass>((i) => { addActionCalls++; }, null);
             ActionableList.Add(item1);
 
             // Act
             ActionableList[0] = item2;
 
             // Assert
-            Assert.AreEqual(parent, item2.Parent);
+            Assert.AreEqual(2, addActionCalls);
         }
 
         [TestMethod]
-        public void IndexerRemovesParent()
+        public void IndexerCallsRemoveAction()
         {
             // Arrange
-            var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var ActionableList = new ActionableList<TestClass>(parent);
+            int addActionCalls = 0;
+            int removeActionCalls = 0;
+            var ActionableList = new ActionableList<TestClass>((i) => { addActionCalls++; }, (i) => { removeActionCalls++; });
             ActionableList.Add(item1);
 
             // Act
             ActionableList[0] = item2;
 
             // Assert
-            Assert.IsNull(item1.Parent);
+            Assert.AreEqual(2, addActionCalls);
+            Assert.AreEqual(1, removeActionCalls);
         }
-
+        
         [TestMethod]
-        public void IndexerDoesNotRemovesParentIfAddedToListUnderADifferentIndex()
+        public void RemoveAtCallsRemoveAction()
         {
             // Arrange
             var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var ActionableList = new ActionableList<TestClass>(parent);
-            ActionableList.AddRange(new[] { item1, item1 });
-
-            // Act
-            ActionableList[1] = item2;
-
-            // Assert
-            Assert.AreEqual(parent, item1.Parent);
-        }
-
-        [TestMethod]
-        public void RemoveAtRemovesParent()
-        {
-            // Arrange
-            var parent = new TestClass { Id = 0, Name = "Parent" };
-            var item1 = new TestClass { Id = 1, Name = "Item 1" };
-            var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var ActionableList = new ActionableList<TestClass>(parent);
+            int addActionCalls = 0;
+            int removeActionCalls = 0;
+            var ActionableList = new ActionableList<TestClass>((i) => { addActionCalls++; }, (i) => { removeActionCalls++; });
             ActionableList.AddRange(new[] { item1, item2 });
+            Assert.AreEqual(0, removeActionCalls);
 
             // Act
             ActionableList.RemoveAt(1);
 
             // Assert
-            Assert.IsNull(item2.Parent);
+            Assert.AreEqual(2, addActionCalls);
+            Assert.AreEqual(1, removeActionCalls);
         }
-
+        
         [TestMethod]
-        public void RemoveAtDoesNotRemovesParentIfAddedToListUnderADifferentIndex()
+        public void RemoveCallsRemovesAction()
         {
             // Arrange
-            var parent = new TestClass { Id = 0, Name = "Parent" };
-            var item1 = new TestClass { Id = 1, Name = "Item 1" };
-            var ActionableList = new ActionableList<TestClass>(parent);
-            ActionableList.AddRange(new[] { item1, item1 });
-
-            // Act
-            ActionableList.RemoveAt(1);
-
-            // Assert
-            Assert.AreEqual(parent, item1.Parent);
-        }
-
-
-        [TestMethod]
-        public void RemoveRemovesParent()
-        {
-            // Arrange
-            var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var ActionableList = new ActionableList<TestClass>(parent);
+            int addActionCalls = 0;
+            int removeActionCalls = 0;
+            var ActionableList = new ActionableList<TestClass>((i) => { addActionCalls++; }, (i) => { removeActionCalls++; });
             ActionableList.AddRange(new[] { item1, item2 });
 
             // Act
             ActionableList.Remove(item2);
 
             // Assert
-            Assert.IsNull(item2.Parent);
+            Assert.AreEqual(2, addActionCalls);
+            Assert.AreEqual(1, removeActionCalls);
         }
-
+        
         [TestMethod]
-        public void RemoveDoesNotRemovesParentIfAddedToListMultipleTimes()
+        public void ClearCallsRemoveAction()
         {
             // Arrange
-            var parent = new TestClass { Id = 0, Name = "Parent" };
-            var item1 = new TestClass { Id = 1, Name = "Item 1" };
-            var ActionableList = new ActionableList<TestClass>(parent);
-            ActionableList.AddRange(new[] { item1, item1 });
-
-            // Act
-            ActionableList.Remove(item1);
-
-            // Assert
-            Assert.AreEqual(parent, item1.Parent);
-        }
-
-        [TestMethod]
-        public void ClearRemovesParent()
-        {
-            // Arrange
-            var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var ActionableList = new ActionableList<TestClass>(parent);
+            int addActionCalls = 0;
+            int removeActionCalls = 0;
+            var ActionableList = new ActionableList<TestClass>((i) => { addActionCalls++; }, (i) => { removeActionCalls++; });
             ActionableList.AddRange(new[] { item1, item2 });
+            Assert.AreEqual(0, removeActionCalls);
 
             // Act
             ActionableList.Clear();
 
             // Assert
-            Assert.IsNull(item1.Parent);
-            Assert.IsNull(item2.Parent);
+            Assert.AreEqual(2, addActionCalls);
+            Assert.AreEqual(2, removeActionCalls);
         }
 
         [TestMethod]
-        public void InsertRangeAddsParent()
+        public void InsertRangeCallsAddAction()
         {
             // Arrange
-            var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var ActionableList = new ActionableList<TestClass>(parent);
+            int addActionCalls = 0;
+            int removeActionCalls = 0;
+            var ActionableList = new ActionableList<TestClass>((i) => { addActionCalls++; }, (i) => { removeActionCalls++; });
 
             // Act
             ActionableList.InsertRange(0, new[] { item1, item2 });
 
             // Assert
-            Assert.AreEqual(parent, item1.Parent);
-            Assert.AreEqual(parent, item2.Parent);
+            Assert.AreEqual(2, addActionCalls);
         }
 
         [TestMethod]
         public void RemoveRangeRemovesParent()
         {
             // Arrange
-            var parent = new TestClass { Id = 0, Name = "Parent" };
             var item1 = new TestClass { Id = 1, Name = "Item 1" };
             var item2 = new TestClass { Id = 2, Name = "Item 2" };
-            var ActionableList = new ActionableList<TestClass>(parent);
+            int addActionCalls = 0;
+            int removeActionCalls = 0;
+            var ActionableList = new ActionableList<TestClass>((i) => { addActionCalls++; }, (i) => { removeActionCalls++; });
             ActionableList.AddRange(new[] { item1, item2 });
 
             // Act
             ActionableList.RemoveRange(0, 2);
 
             // Assert
-            Assert.IsNull(item1.Parent);
-            Assert.IsNull(item2.Parent);
-        }
+            Assert.AreEqual(2, addActionCalls);
+            Assert.AreEqual(2, removeActionCalls);
+        }        
     }
 }

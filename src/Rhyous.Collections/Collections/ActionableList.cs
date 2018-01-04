@@ -35,8 +35,12 @@ namespace Rhyous.Collections
         public virtual Action<TItem> RemoveAction { get; }
 
         #region IList<T>
-        public virtual TItem this[int index] { get => _List[index]; set => _List[index] = value; }
-        
+        public virtual TItem this[int index]
+        {
+            get => _List[index];
+            set => ListExtensions.SetIndex(_List, index, value, AddAction, RemoveAction);
+        }
+
         public virtual int Count => _List.Count;
 
         public virtual bool IsReadOnly => _List.IsReadOnly;
