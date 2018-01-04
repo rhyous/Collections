@@ -10,14 +10,15 @@ namespace Rhyous.Collections
     /// <typeparam name="TItem">The type of item the list holds.</typeparam>
     public class ActionableList<TItem> : IRangeableList<TItem>
     {
-        internal readonly IRangeableList<TItem> _List;
+        protected internal readonly IRangeableList<TItem> _List;
 
         #region Constructors
-        public ActionableList(Action<TItem> addAction, Action<TItem> removeAction)
+        protected ActionableList() { _List = new RangeableList<TItem>(); }
+
+        public ActionableList(Action<TItem> addAction, Action<TItem> removeAction) : this()
         {
             AddAction = addAction;
             RemoveAction = removeAction;
-            _List = new RangeableList<TItem>();
         }
 
         public ActionableList(Action<TItem> addAction, Action<TItem> removeAction, int capacity) : this(addAction, removeAction)
@@ -31,8 +32,8 @@ namespace Rhyous.Collections
         }
         #endregion
         
-        public virtual Action<TItem> AddAction { get; }
-        public virtual Action<TItem> RemoveAction { get; }
+        public virtual Action<TItem> AddAction { get; protected set; }
+        public virtual Action<TItem> RemoveAction { get; protected set; }
 
         #region IList<T>
         public virtual TItem this[int index]
@@ -65,8 +66,9 @@ namespace Rhyous.Collections
 
         public virtual void RemoveAt(int index)
         {
-            RemoveAction(_List[index]);
+            var item = _List[index];
             _List.RemoveAt(index);
+            RemoveAction(item);
         }
 
         #endregion

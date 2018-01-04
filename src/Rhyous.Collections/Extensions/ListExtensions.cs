@@ -14,9 +14,10 @@ namespace Rhyous.Collections
 
         public static void Clear<T>(this IList<T> list, Action<T> onClearAction = null)
         {
-            foreach (var item in list)
-                onClearAction?.Invoke(item);
+            var tmpList = list.ToList();
             list.Clear();
+            foreach (var item in tmpList)
+                onClearAction?.Invoke(item);
         }
 
 
