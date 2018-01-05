@@ -7,6 +7,7 @@ namespace Rhyous.Collections
     /// </summary>
     /// <typeparam name="TItem">The type of item the list holds.</typeparam>
     /// <typeparam name="TParent">The type of the parent of all the items.</typeparam>
+    /// <remarks>This inherits from ActionableList, the actions being to set the parent on Add and remove the parent on Remove.</remarks>
     public class ParentedList<TItem, TParent> : ActionableList<TItem>
         where TItem : IParent<TParent>
     {
