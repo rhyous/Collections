@@ -48,8 +48,10 @@ namespace Rhyous.Collections
             var concreteList = list as List<T>;
             if (concreteList != null)
             {
-                concreteList.AddRange(items);
-                OnItemAction(items, onAddAction);
+                // ToList() is needed in case IEnumerable creates a new instance on iteration
+                var itemsList = items.ToList(); 
+                concreteList.AddRange(itemsList);
+                OnItemAction(itemsList, onAddAction);
                 return;
             }
             foreach (var item in items)
@@ -74,8 +76,9 @@ namespace Rhyous.Collections
             var concreteList = list as List<T>;
             if (concreteList != null)
             {
-                concreteList.InsertRange(index, items);
-                OnItemAction(items, onAddAction);
+                var itemsList = items.ToList();
+                concreteList.InsertRange(index, itemsList);
+                OnItemAction(itemsList, onAddAction);
                 return;
             }
             foreach (var item in items)

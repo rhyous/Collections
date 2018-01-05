@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace Rhyous.Collections.Tests.Collections
 {
@@ -236,6 +237,27 @@ namespace Rhyous.Collections.Tests.Collections
             // Assert
             Assert.IsNull(item1.Parent);
             Assert.IsNull(item2.Parent);
+        }
+
+        [TestMethod]
+        public void AddRangeOnIEnumerableIterationParentIsSet()
+        {
+            // Arrange
+            var parent = new TestClass { Id = 0, Name = "Parent" };
+            var item1 = new TestClass { Id = 1, Name = "Item 1" };
+            var item2 = new TestClass { Id = 2, Name = "Item 2" };
+            var parentedList = new ParentedList<TestClass>(parent);
+            var list = new[] { item1, item2 };
+            var enumerableThatCreatesANewInstanceEachIteration = list.Select(i => new TestClass { Id = i.Id, Name = i.Name });
+
+            // Act
+            parentedList.AddRange(enumerableThatCreatesANewInstanceEachIteration);
+
+            // Assert
+            Assert.IsNull(item1.Parent);
+            Assert.IsNull(item2.Parent);
+            Assert.AreEqual(parent, parentedList[0].Parent);
+            Assert.AreEqual(parent, parentedList[1].Parent);
         }
     }
 }
