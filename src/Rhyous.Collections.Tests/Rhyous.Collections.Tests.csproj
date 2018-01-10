@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Collections\ActionableListTests.cs" />
     <Compile Include="Collections\ParentedList.Object.Tests.cs" />
+    <Compile Include="Extensions\NameValueCollectionTests.cs" />
     <Compile Include="Extensions\ValueAccessorExtensionsTests.cs" />
     <Compile Include="TestModels\TestClass.cs" />
     <Compile Include="Collections\UniqueListTests.cs" />

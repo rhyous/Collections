@@ -1,7 +1,11 @@
 ﻿namespace Rhyous.Collections
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.ComponentModel;
+    using System.Linq;
 
     public static class NameValueCollectionExtensions
     {
@@ -29,6 +33,24 @@
                 return defaultValue;
             }
             return (T)(converter.ConvertFromInvariantString(value));
+        }
+
+        public static NameValueCollection Clone(this NameValueCollection collection, params string[] excludeParams)
+        {
+            return collection.Clone(null, excludeParams);
+        }
+
+        public static NameValueCollection Clone(this NameValueCollection collection, IEqualityComparer<string> comparer, params string[] excludeParams)
+        {
+            var clonedCollection = new NameValueCollection();
+            if (comparer == null)
+                comparer = StringComparer.CurrentCultureIgnoreCase;
+            foreach (string key in collection.Keys)
+            {
+                if (!excludeParams.Contains(key, comparer))
+                    clonedCollection.Add(key, collection[key]);
+            }
+            return clonedCollection;
         }
     }
 }
