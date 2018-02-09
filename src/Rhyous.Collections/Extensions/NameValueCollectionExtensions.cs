@@ -1,7 +1,6 @@
 ﻿namespace Rhyous.Collections
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.ComponentModel;
@@ -26,6 +25,8 @@
         /// <returns></returns>
         public static T Get<T>(this NameValueCollection collection, string key, T defaultValue)
         {
+            if (collection == null || string.IsNullOrEmpty(key))
+                return defaultValue;
             var value = collection[key];
             var converter = TypeDescriptor.GetConverter(typeof(T));
             if (string.IsNullOrWhiteSpace(value) || !converter.IsValid(value))

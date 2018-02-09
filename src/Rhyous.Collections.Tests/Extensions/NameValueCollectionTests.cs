@@ -8,6 +8,46 @@ namespace Rhyous.Collections.Tests.Extensions
     public class NameValueCollectionTests
     {
         [TestMethod]
+        public void GetValueCollectionNullTest()
+        {
+            // Arrange
+            NameValueCollection collection = null;
+
+            // Act
+            var actual = collection.Get("Item1", -1);
+
+            // Assert
+            Assert.AreEqual(-1, actual);
+        }
+
+        [TestMethod]
+        public void GetValueCollectionEmptyTest()
+        {
+            // Arrange
+            NameValueCollection collection = null;
+
+            // Act
+            var actual = collection.Get(null, -1);
+
+            // Assert
+            Assert.AreEqual(-1, actual);
+        }
+
+        [TestMethod]
+        public void GetValueCollectionSpacesAreValidTest()
+        {
+            // Arrange
+            var collection = new NameValueCollection();
+            collection.Add("  ", "1");
+
+            // Act
+            var actual = collection.Get("  ", 0);
+
+            // Assert
+            Assert.AreEqual(1, actual);
+        }
+
+        [TestMethod]
         public void GetValueByType()
         {
             // Arrange
