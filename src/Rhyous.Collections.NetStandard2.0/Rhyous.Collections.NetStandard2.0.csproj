@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Rhyous.Collections</AssemblyName>
+    <RootNamespace>Rhyous.Collections</RootNamespace>
+    <FileVersion>1.0.7.0</FileVersion>
+    <Version>1.0.7</Version>
+  </PropertyGroup>
+
+  <Import Project="..\Rhyous.Collections.Shared\Rhyous.Collections.Shared.projitems" Label="Shared" />
+
+</Project>
