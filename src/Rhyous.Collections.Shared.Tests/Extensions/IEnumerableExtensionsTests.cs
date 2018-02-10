@@ -8,6 +8,66 @@ namespace Rhyous.Collections.Tests.Dictionaries
     [TestClass]
     public class IEnumerableExtensionsTests
     {
+        [TestMethod]
+        public void NoneIEnumerableNullNoExpressionTests()
+        {
+            // Arrange
+            IEnumerable<int> list = null;
+
+            // Act & Assert
+            Assert.IsTrue(list.None());
+        }
+
+        [TestMethod]
+        public void NoneIEnumerableEmptyNoExpressionTests()
+        {
+            // Arrange
+            IEnumerable<int> list = new List<int>();
+
+            // Act & Assert
+            Assert.IsTrue(list.None());
+        }
+
+        [TestMethod]
+        public void NoneIEnumerableNullWithExpressionTests()
+        {
+            // Arrange
+            IEnumerable<int> list = null;
+
+            // Act & Assert
+            Assert.IsTrue(list.None(i=>i < 10));
+        }
+
+        [TestMethod]
+        public void NoneIEnumerableEmptyWithExpressionTests()
+        {
+            // Arrange
+            IEnumerable<int> list = new List<int>();
+
+            // Act & Assert
+            Assert.IsTrue(list.None(i => i < 10));
+        }
+        
+        [TestMethod]
+        public void NoneIEnumerableWithExpressionFalseTests()
+        {
+            // Arrange
+            IEnumerable<int> list = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            // Act & Assert
+            Assert.IsFalse(list.None(i => i < 10));
+        }
+
+        [TestMethod]
+        public void NoneIEnumerableWithExpressionTrueTests()
+        {
+            // Arrange
+            IEnumerable<int> list = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            // Act & Assert
+            Assert.IsTrue(list.None(i => i > 10));
+        }
+
         #region UnorderedEquals tests
         /// <summary>
         /// Scenario 1 - Both null

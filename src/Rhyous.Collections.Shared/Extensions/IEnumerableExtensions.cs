@@ -1,11 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Rhyous.Collections
 {
     public static class IEnumerableExtensions
-    {        
+    {
+        public static bool None<TSource>(this IEnumerable<TSource> source)
+        {
+            return source == null || !source.Any();
+        }
+
+        public static bool None<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        {
+            return source == null || !source.Any(predicate);
+        }
+
         // 10-100 Rule Exception - Algorithm 
         public static bool UnorderedEquals<T>(this IEnumerable<T> left, IEnumerable<T> right, IEqualityComparer<T> comparer = null)
         {

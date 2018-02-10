@@ -4,8 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Rhyous.Collections</AssemblyName>
     <RootNamespace>Rhyous.Collections</RootNamespace>
-    <FileVersion>1.0.7.0</FileVersion>
-    <Version>1.0.7</Version>
+    <FileVersion>1.0.8.0</FileVersion>
+    <Version>1.0.8</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <Import Project="..\Rhyous.Collections.Shared\Rhyous.Collections.Shared.projitems" Label="Shared" />
