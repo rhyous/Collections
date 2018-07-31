@@ -5,6 +5,7 @@
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Linq;
+    using System.Text;
 
     public static class NameValueCollectionExtensions
     {
@@ -52,6 +53,45 @@
                     clonedCollection.Add(key, collection[key]);
             }
             return clonedCollection;
+        }
+
+        /// <summary>
+        /// A method that converts a NameValueCollection back to a Url query string.
+        /// </summary>
+        /// <param name="collection">the name value collection.</param>
+        /// <param name="prefix">Default: "?". Most Url parameters start with a "?". Set this to "" to not have the starting question mark.</param>
+        /// <param name="separator">Default: "&". Most Url parameters are separated with an ampersand "&".</param>
+        /// <returns>The NameValueCollection as a Url query string.</returns>
+        public static string ToUrlQueryString(this NameValueCollection collection, string prefix = "?", string separator = "&")
+        {
+            if (collection == null || collection.Count == 0)
+                return string.Empty;
+
+            var sbQuery = new StringBuilder();
+
+            foreach (string key in collection)
+            {
+                if (string.IsNullOrWhiteSpace(key))
+                    continue;
+
+                string[] values = collection.GetValues(key);
+
+                // Handle bool keys, where the key value is blank.
+                if (values == null)
+                {
+                    sbQuery.Append(sbQuery.Length == 0 ? prefix : separator);
+                    sbQuery.Append($"{Uri.EscapeDataString(key)}");
+                    continue;
+                }
+
+                // Handle keys with one or more values
+                foreach (string value in values)
+                {
+                    sbQuery.Append(sbQuery.Length == 0 ? prefix : separator);
+                    sbQuery.Append($"{Uri.EscapeDataString(key)}={Uri.EscapeDataString(value)}");
+                }
+            }
+            return sbQuery.ToString();
         }
     }
 }

@@ -16,7 +16,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Collections\UniqueListTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Dictionaries\NullSafeDictionaryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IEnumerableExtensionsTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\NameValueCollectionTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\NameValueCollectionExtensions.GetValue.Tests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\NameValueCollectionExtensions.ToUrlQueryString.Tests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ValueAccessorExtensionsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestModels\TestClass.cs" />
   </ItemGroup>

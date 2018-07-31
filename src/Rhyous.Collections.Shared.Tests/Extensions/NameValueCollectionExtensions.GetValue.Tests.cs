@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 namespace Rhyous.Collections.Tests.Extensions
 {
     [TestClass]
-    public class NameValueCollectionTests
+    public partial class NameValueCollectionExtensionsTests
     {
         [TestMethod]
         public void GetValueCollectionNullTest()
