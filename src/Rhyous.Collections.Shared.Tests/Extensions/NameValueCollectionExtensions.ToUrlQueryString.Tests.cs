@@ -181,5 +181,23 @@ namespace Rhyous.Collections.Tests.Extensions
             // Assert
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void NameValueCollectionExtensions_ToQueryString_EscapedSequences_Test()
+        {
+            // Arrange
+            var collection = new NameValueCollection
+            {
+                { "Prop0", "Val0 & Value0" },
+                { "Prop1", "Val1 Value1" }
+            };
+            var expected = "?Prop0=Val0%20%26%20Value0&Prop1=Val1%20Value1";
+
+            // Act
+            var actual = collection.ToUrlQueryString();
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

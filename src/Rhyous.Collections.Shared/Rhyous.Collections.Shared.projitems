@@ -24,6 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IEnumerableExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ListExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\NameValueCollectionExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\TypeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ValueAccessorExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IChildren.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IParent.cs" />
