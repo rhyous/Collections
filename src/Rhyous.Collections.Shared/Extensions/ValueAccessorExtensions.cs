@@ -46,6 +46,21 @@ namespace Rhyous.Collections
         }
 
         /// <summary>
+        /// A static method to get the value of a property of any object casted to a type or default(T) if the cast fails
+        /// </summary>
+        /// <typeparam name="T">The type expected to be returned</typeparam>
+        /// <param name="o">The instance from which to read the value.</param>
+        /// <param name="propertyName">The name of the property</param>
+        /// <returns>The value of the property boxed as a T.</returns>
+        public static T GetPropertyValue<T>(this object o, string propertyName, T defaultValue = default(T))
+        {
+            var value = o.GetType().GetPropertyInfo(propertyName)?.GetValue(o);
+            if (value == null || value.GetType() != typeof(T))
+                return defaultValue;
+            return (T)value;
+        }
+
+        /// <summary>
         /// A static method to get the value of a property of any object.
         /// </summary>
         /// <param name="o">The instance from which to read the value.</param>
@@ -99,6 +114,12 @@ namespace Rhyous.Collections
             return GetFieldInfo(o.GetType(), fieldName)?.GetValue(o) ?? defaultValue;
         }
 
+        /// <summary>
+        /// Allows for return the default of any type at runtime,
+        /// without knowing that type at compile time.
+        /// </summary>
+        /// <param name="t">The type.</param>
+        /// <returns>The result of default(T) for type t.</returns>
         public static object GetDefault(this Type t)
         {
             return typeof(ValueAccessorExtensions).GetMethod("Default", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(t).Invoke(null, null);

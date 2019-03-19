@@ -80,7 +80,7 @@
                 if (values == null)
                 {
                     sbQuery.Append(sbQuery.Length == 0 ? prefix : separator);
-                    sbQuery.Append($"{Uri.EscapeDataString(key)}");
+                    sbQuery.Append(Uri.EscapeDataString(key));
                     continue;
                 }
 

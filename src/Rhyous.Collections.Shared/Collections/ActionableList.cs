@@ -15,31 +15,39 @@ namespace Rhyous.Collections
         #region Constructors
         protected ActionableList() { _List = new RangeableList<TItem>(); }
 
-        public ActionableList(Action<TItem> addAction, Action<TItem> removeAction) : this()
+        public ActionableList(Action<TItem> addAction, Action<TItem> removeAction, Action<int, TItem> insertAction = null) : this()
         {
             AddAction = addAction;
             RemoveAction = removeAction;
+            InsertAction = insertAction;
         }
 
-        public ActionableList(Action<TItem> addAction, Action<TItem> removeAction, int capacity) : this(addAction, removeAction)
+        public ActionableList(Action<TItem> addAction, Action<TItem> removeAction, int capacity, Action<int, TItem> insertAction = null) : this(addAction, removeAction, insertAction)
         {
             _List = new RangeableList<TItem>(capacity);
         }
 
-        public ActionableList(Action<TItem> addAction, Action<TItem> removeAction, IEnumerable<TItem> collection) : this(addAction, removeAction)
+        public ActionableList(Action<TItem> addAction, Action<TItem> removeAction, IEnumerable<TItem> collection, Action<int, TItem> insertAction = null) : this(addAction, removeAction, insertAction)
         {
             _List = new RangeableList<TItem>(collection);
         }
         #endregion
         
         public virtual Action<TItem> AddAction { get; protected set; }
+
+        public virtual Action<int, TItem> InsertAction
+        {
+            get { return _InsertAction ?? (_InsertAction = (int index, TItem item) => { AddAction?.Invoke(item); }); }
+            protected set { _InsertAction = value; }
+        } private Action<int, TItem> _InsertAction;
+
         public virtual Action<TItem> RemoveAction { get; protected set; }
 
         #region IList<T>
         public virtual TItem this[int index]
         {
             get => _List[index];
-            set => ListExtensions.SetIndex(_List, index, value, AddAction, RemoveAction);
+            set => _List.SetIndex(index, value, AddAction, RemoveAction);
         }
 
         public virtual int Count => _List.Count;
@@ -60,7 +68,7 @@ namespace Rhyous.Collections
 
         public virtual int IndexOf(TItem item) => _List.IndexOf(item);
 
-        public virtual void Insert(int index, TItem item) => ListExtensions.Insert(_List, index, item, (id, i) => { AddAction?.Invoke(i); });
+        public virtual void Insert(int index, TItem item) => ListExtensions.Insert(_List, index, item, InsertAction);
 
         public virtual bool Remove(TItem item) => ListExtensions.Remove(_List, item, RemoveAction);
 
@@ -77,7 +85,7 @@ namespace Rhyous.Collections
         #region IRangeableList
         public virtual void AddRange(IEnumerable<TItem> items) => ListExtensions.AddRange(_List, items, AddAction);
 
-        public virtual void InsertRange(int index, IEnumerable<TItem> items) => ListExtensions.InsertRange(_List, index, items, AddAction);
+        public virtual void InsertRange(int index, IEnumerable<TItem> items) => ListExtensions.InsertRange(_List, index, items, InsertAction);
 
         public virtual IRangeableList<TItem> GetRange(int index, int count) => ListExtensions.GetRange(_List, index, count);
 

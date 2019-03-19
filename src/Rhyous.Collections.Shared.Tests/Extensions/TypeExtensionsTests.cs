@@ -156,6 +156,19 @@ namespace Rhyous.Collections.Tests
         public enum TestEnumShort : short { D = 4, E, F };
 
         [TestMethod]
+        public void TypeExtensions_ToDictionary_Object_Test()
+        {
+            // Arrange
+            var dict = typeof(TestEnum).ToDictionary();
+
+            // Act & Assert
+            Assert.AreEqual(3, dict.Count);
+            Assert.AreEqual(TestEnum.A, dict["A"]);
+            Assert.AreEqual(TestEnum.B, dict["B"]);
+            Assert.AreEqual(TestEnum.C, dict["C"]);
+        }
+
+        [TestMethod]
         public void TypeExtensions_ToDictionary_Test()
         {
             // Arrange

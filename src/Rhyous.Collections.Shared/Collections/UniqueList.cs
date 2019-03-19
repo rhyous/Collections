@@ -66,7 +66,10 @@ namespace Rhyous.Collections
         public void Insert(int index, T item)
         {
             if (!IsDuplicate(item))
+            {
                 List.Insert(index, item);
+                return;
+            }
             if (ThrowOnDuplicate)
                 throw new DuplicateItemException();
         }

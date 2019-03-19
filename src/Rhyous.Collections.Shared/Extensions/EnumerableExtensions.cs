@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Rhyous.Collections
 {
-    public static class IEnumerableExtensions
+    public static class EnumerableExtensions
     {
         public static bool None<TSource>(this IEnumerable<TSource> source)
         {

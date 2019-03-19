@@ -12,14 +12,21 @@
     <Compile Include="$(MSBuildThisFileDirectory)Collections\ActionableListTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\ParentedList.Object.Tests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\ParentedListTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\TreeBranchTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\TreeTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\UniqueListTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Dictionaries\NullSafeDictionaryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\DictionaryDefaultValueProviderExtensionsTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\DictionaryExtensionsTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ListExtensionsTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\QueryableExtensionsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TypeExtensionsTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\IEnumerableExtensionsTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\EnumerableExtensionsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\NameValueCollectionExtensions.GetValue.Tests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\NameValueCollectionExtensions.ToUrlQueryString.Tests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ValueAccessorExtensionsTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestModels\A.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestModels\Person.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestModels\TestClass.cs" />
   </ItemGroup>
 </Project>

@@ -6,7 +6,7 @@ using System.Linq;
 namespace Rhyous.Collections.Tests.Dictionaries
 {
     [TestClass]
-    public class IEnumerableExtensionsTests
+    public class EnumerableExtensionsTests
     {
         [TestMethod]
         public void NoneIEnumerableNullNoExpressionTests()

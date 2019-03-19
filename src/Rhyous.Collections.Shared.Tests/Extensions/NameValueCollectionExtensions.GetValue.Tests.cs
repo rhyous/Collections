@@ -62,6 +62,49 @@ namespace Rhyous.Collections.Tests.Extensions
         }
 
         [TestMethod]
+        public void GetValueByType_Null()
+        {
+            // Arrange
+            var collection = new NameValueCollection();
+            collection.Add("Item1", null);
+
+            // Act
+            var actual = collection.Get("Item1", 0);
+
+            // Assert
+            Assert.AreEqual(0, actual);
+        }
+
+        [TestMethod]
+        public void GetValueByType_Whitespace()
+        {
+            // Arrange
+            var collection = new NameValueCollection();
+            collection.Add("Item1", "");
+
+            // Act
+            var actual = collection.Get("Item1", 0);
+
+            // Assert
+            Assert.AreEqual(0, actual);
+        }
+
+        [TestMethod]
+        public void GetValueByType_InvalidType()
+        {
+            // Arrange
+            var collection = new NameValueCollection();
+            collection.Add("Item1", "1");
+            var defaultObj = new Person();
+
+            // Act
+            var actual = collection.Get("Item1", defaultObj);
+
+            // Assert
+            Assert.AreEqual(defaultObj, actual);
+        }
+
+        [TestMethod]
         public void Clone()
         {
             // Arrange

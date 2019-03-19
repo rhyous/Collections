@@ -9,7 +9,6 @@
         {
             get { return _Children ?? (_Children = new ParentedList<TestClass, TestClass>(this)); }
             set { _Children = value; }
-        }
-        private ParentedList<TestClass, TestClass> _Children;
+        } private ParentedList<TestClass, TestClass> _Children;
     }
 }

@@ -53,10 +53,20 @@ namespace Rhyous.Collections
 
         public virtual Func<TKey, TValue> DefaultValueProviderMethod
         {
-            get { return _DefaultValueProviderMethod ?? (_DefaultValueProviderMethod => (TValue)Activator.CreateInstance(typeof(TValue))); }
+            get { return this._DefaultValueProviderMethod ?? (_DefaultValueProviderMethod => CreateInstance()); }
             set { _DefaultValueProviderMethod = value; }
         }
+
+        private static TValue CreateInstance()
+        {
+            if (typeof(TValue) == typeof(string))
+                return (TValue)Activator.CreateInstance(typeof(TValue), new char[0]);
+            return (TValue)Activator.CreateInstance(typeof(TValue));
+        }
+
         private Func<TKey, TValue> _DefaultValueProviderMethod;
+
+
 
         #region Interface
 

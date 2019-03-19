@@ -20,10 +20,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Dictionaries\ISharedInterfaceDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Dictionaries\NullSafeDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\DuplicateItemException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\DictionaryDefaultValueProviderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\DictionaryExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\EnumerableExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ListExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\NameValueCollectionExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\QueryableExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TypeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ValueAccessorExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IChildren.cs" />

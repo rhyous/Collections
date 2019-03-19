@@ -44,5 +44,7 @@ namespace Rhyous.Collections.Tests.Collections
             Assert.AreEqual(wrappedFirstChild, tree.Root.Children[0]);
             Assert.AreEqual(wrappedFirstChild.Parent, tree.Root.Children[0].Parent);
         }
+
+
     }
 }
