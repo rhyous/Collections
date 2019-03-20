@@ -441,6 +441,20 @@ namespace Rhyous.Collections.Tests
 
         #region AddRange
         [TestMethod]
+        public void ListExtensions_AddRange_NoAction_NullList_Test()
+        {
+            // Arrange
+            IList<int> list = null;
+
+            // Act
+            // Assert
+            Assert.ThrowsException<ArgumentNullException>(() =>
+            {
+                list.AddRange(new[] { 27, 28 });
+            });
+        }
+
+        [TestMethod]
         public void ListExtensions_AddRange_NullList_Test()
         {
             // Arrange
@@ -469,7 +483,20 @@ namespace Rhyous.Collections.Tests
         }
 
         [TestMethod]
-        public void ListExtensions_AddRange_List_ItemsNull_ActionNotCalled_Test()
+        public void ListExtensions_AddRange_List_ItemsEmpty_NoAction_Test()
+        {
+            // Arrange
+            IList<int> list = new List<int> { 1, 2, 3 };
+
+            // Act
+            list.AddRange(new int[] { });
+
+            // Assert
+            Assert.AreEqual(3, list.Count);
+        }
+
+        [TestMethod]
+        public void ListExtensions_AddRange_List_ItemsEmpty_ActionNotCalled_Test()
         {
             // Arrange
             IList<int> list = new List<int> { 1, 2, 3 };
@@ -484,7 +511,7 @@ namespace Rhyous.Collections.Tests
         }
 
         [TestMethod]
-        public void ListExtensions_AddRange_List_ItemsNull_ActionNotCalled_EnumerableAction_Test()
+        public void ListExtensions_AddRange_List_ItemsEmpty_ActionNotCalled_EnumerableAction_Test()
         {
             // Arrange
             IList<int> list = new List<int> { 1, 2, 3 };
@@ -498,6 +525,32 @@ namespace Rhyous.Collections.Tests
             Assert.AreEqual(0, timesCalled);
         }
 
+
+        [TestMethod]
+        public void ListExtensions_AddRange_List_NoAction_Test()
+        {
+            // Arrange
+            IList<int> list = new List<int> { 1, 2, 3 };
+
+            // Act
+            list.AddRange(new[] { 5, 7, 11 });
+
+            // Assert
+            Assert.AreEqual(6, list.Count);
+        }
+
+        [TestMethod]
+        public void ListExtensions_AddRange_UniqueList_NoAction_Test()
+        {
+            // Arrange
+            IList<int> list = new UniqueList<int> { 1, 2, 3 };
+
+            // Act
+            list.AddRange(new[] { 5, 7, 11 });
+
+            // Assert
+            Assert.AreEqual(6, list.Count);
+        }
 
         [TestMethod]
         public void ListExtensions_AddRange_List_ActionCalled_Test()

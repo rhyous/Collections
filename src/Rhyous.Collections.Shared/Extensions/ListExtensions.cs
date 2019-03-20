@@ -131,6 +131,31 @@ namespace Rhyous.Collections
         #endregion
 
         #region AddRange
+
+        /// <summary>
+        /// Provides and AddRange with an action.
+        /// </summary>
+        /// <typeparam name="T">The type of item in the list.</typeparam>
+        /// <param name="list">The list.</param>
+        /// <param name="items">The items to add.</param>
+        public static void AddRange<T>(this IList<T> list, IEnumerable<T> items)
+        {
+            ListIsNotNull(list, nameof(list));
+            ListIsNotNull(items, nameof(items));
+            if (!items.Any())
+                return;
+            // ToList() is needed in case IEnumerable creates a new instance on iteration
+            if (list is List<T> concreteList)
+            {
+                concreteList.AddRange(items);
+                return;
+            }
+            foreach (var item in items)
+            {
+                list.Add(item);
+            }
+        }
+
         /// <summary>
         /// Provides and AddRange with an action.
         /// </summary>
@@ -139,7 +164,7 @@ namespace Rhyous.Collections
         /// <param name="items">The items to add.</param>
         /// <param name="onAddAction">The action to run after the items are added.</param>
         /// <remarks>The action is run n times, once for each item.</remarks>
-        public static void AddRange<T>(this IList<T> list, IEnumerable<T> items, Action<T> onAddAction = null)
+        public static void AddRange<T>(this IList<T> list, IEnumerable<T> items, Action<T> onAddAction)
         {
             ListIsNotNull(list, nameof(list));
             ListIsNotNull(items, nameof(items));
@@ -168,7 +193,7 @@ namespace Rhyous.Collections
         /// <param name="items">The items to add.</param>
         /// <param name="onAddAction">The action to run after the items are added.</param>
         /// <remarks>The action is run one times, once for all items.</remarks>
-        public static void AddRange<T>(this IList<T> list, IEnumerable<T> items, Action<IEnumerable<T>> onAddAction = null)
+        public static void AddRange<T>(this IList<T> list, IEnumerable<T> items, Action<IEnumerable<T>> onAddAction)
         {
             ListIsNotNull(list, nameof(list));
             ListIsNotNull(items, nameof(items));
