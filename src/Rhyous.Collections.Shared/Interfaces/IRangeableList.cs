@@ -18,5 +18,7 @@ namespace Rhyous.Collections
         IRangeableList<T> GetRange(int index, int count);
 
         void RemoveRange(int index, int count);
+
+        int Capacity { get; set; }
     }
 }

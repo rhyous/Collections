@@ -6,17 +6,19 @@ namespace Rhyous.Collections
 {
     /// <summary>
     /// A list that automatically sets the parent when an item is added.
+    /// The parent is an unknown object.
     /// </summary>
     /// <typeparam name="TItem">The type of item the list holds.</typeparam>
     /// <remarks>This inherits from ActionableList, the actions being to set the parent on Add and remove the parent on Remove.</remarks>
     public class ParentedList<TItem> : ActionableList<TItem>
     {
-            #region Constructors
-            public ParentedList()
-            {
-                base.AddAction = AddParent;
-                base.RemoveAction = RemoveParent;
-            }
+        #region Constructors
+        public ParentedList()
+        {
+            base.AddAction = AddParent;
+            base.RemoveAction = RemoveParent;
+        }
+
         public ParentedList(object parent, string parentPropertyName = "Parent") : this()
         {
             Parent = parent;

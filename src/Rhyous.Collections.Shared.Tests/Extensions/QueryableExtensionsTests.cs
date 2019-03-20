@@ -17,7 +17,7 @@ namespace Rhyous.Collections.Tests
             IQueryable<Person> queryable = null;
 
             // Act
-            var actual = queryable.IfSkip(0);
+            var actual = queryable.IfSkip(1);
 
             // Assert
             Assert.IsNull(actual);
@@ -54,7 +54,7 @@ namespace Rhyous.Collections.Tests
             }.AsQueryable();
 
             // Act
-            var actual = queryable.Skip(1);
+            var actual = queryable.IfSkip(1);
             var actualList = actual.ToList();
 
             // Assert
@@ -71,7 +71,7 @@ namespace Rhyous.Collections.Tests
             IQueryable<Person> queryable = null;
 
             // Act
-            var actual = queryable.IfTake(0);
+            var actual = queryable.IfTake(1);
 
             // Assert
             Assert.IsNull(actual);
@@ -108,7 +108,7 @@ namespace Rhyous.Collections.Tests
             }.AsQueryable();
 
             // Act
-            var actual = queryable.Take(1);
+            var actual = queryable.IfTake(1);
             var actualList = actual.ToList();
 
             // Assert

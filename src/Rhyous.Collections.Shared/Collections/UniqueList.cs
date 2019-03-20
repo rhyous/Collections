@@ -9,19 +9,21 @@ namespace Rhyous.Collections
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <remarks>For items that are not reference equals but should be equals, an Equality comparer can be set.</remarks>
-    public class UniqueList<T> : IList<T>
+    public class UniqueList<T> : IList<T>, IRangeableList<T>
     {
         #region Constructors
 
-        public UniqueList() => List = new List<T>();
+        public UniqueList() => List = new RangeableList<T>();
 
-        public UniqueList(IEqualityComparer<T> equalityComparer) : this() => EqualityComparer = equalityComparer;
+        public UniqueList(IEqualityComparer<T> equalityComparer) 
+            : this() => EqualityComparer = equalityComparer;
 
         public UniqueList(int capacity) => List = new List<T>(capacity);
 
-        public UniqueList(IEnumerable<T> collection) => List = new List<T>(collection.Distinct());
+        public UniqueList(IEnumerable<T> collection) => List = new List<T>(collection?.Distinct());
 
-        public UniqueList(IEnumerable<T> collection, IEqualityComparer<T> equalityComparer) : this(collection) => EqualityComparer = equalityComparer;
+        public UniqueList(IEnumerable<T> collection, IEqualityComparer<T> equalityComparer) 
+            : this(collection) => EqualityComparer = equalityComparer;
 
         #endregion
         internal List<T> List { get; set; }
@@ -35,6 +37,8 @@ namespace Rhyous.Collections
         public int Count => List.Count;
 
         public bool IsReadOnly => ((IList<T>)List).IsReadOnly;
+
+        public int Capacity { get => List.Capacity; set => List.Capacity = value; }
 
         public T this[int index] {
             get { return List[index]; }
@@ -89,10 +93,8 @@ namespace Rhyous.Collections
 
         public void AddRange(IEnumerable<T> items)
         {
-            foreach (var item in items)
-            {
-                Add(item);
-            }
+            items = BulkCheckDuplicates(items);
+            List.AddRange(items);
         }
 
         public void Clear() => List.Clear();
@@ -106,5 +108,32 @@ namespace Rhyous.Collections
         public IEnumerator<T> GetEnumerator() => List.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => List.GetEnumerator();
+
+        public void InsertRange(int index, IEnumerable<T> items)
+        {
+            items = BulkCheckDuplicates(items);
+            List.InsertRange(index, items);
+        }
+
+        private IEnumerable<T> BulkCheckDuplicates(IEnumerable<T> items)
+        {
+            var itemList = items.ToList();
+            var duplicates = new List<T>();
+            foreach (var item in items)
+            {
+                if (IsDuplicate(item))
+                {
+                    if (ThrowOnDuplicate)
+                        throw new DuplicateItemException();
+                    duplicates.Add(item);
+                }
+            }
+            itemList.RemoveAny(duplicates);
+            return itemList;
+        }
+
+        public IRangeableList<T> GetRange(int index, int count) => ListExtensions.GetRange(this, index, count);
+
+        public void RemoveRange(int index, int count) => List.RemoveRange(index, count);
     }
 }

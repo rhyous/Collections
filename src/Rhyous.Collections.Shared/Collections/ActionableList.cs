@@ -15,19 +15,22 @@ namespace Rhyous.Collections
         #region Constructors
         protected ActionableList() { _List = new RangeableList<TItem>(); }
 
-        public ActionableList(Action<TItem> addAction, Action<TItem> removeAction, Action<int, TItem> insertAction = null) : this()
+        public ActionableList(Action<TItem> addAction, Action<TItem> removeAction, Action<int, TItem> insertAction = null) 
+            : this()
         {
             AddAction = addAction;
             RemoveAction = removeAction;
             InsertAction = insertAction;
         }
 
-        public ActionableList(Action<TItem> addAction, Action<TItem> removeAction, int capacity, Action<int, TItem> insertAction = null) : this(addAction, removeAction, insertAction)
+        public ActionableList(Action<TItem> addAction, Action<TItem> removeAction, int capacity, Action<int, TItem> insertAction = null) 
+            : this(addAction, removeAction, insertAction)
         {
             _List = new RangeableList<TItem>(capacity);
         }
 
-        public ActionableList(Action<TItem> addAction, Action<TItem> removeAction, IEnumerable<TItem> collection, Action<int, TItem> insertAction = null) : this(addAction, removeAction, insertAction)
+        public ActionableList(Action<TItem> addAction, Action<TItem> removeAction, IEnumerable<TItem> collection, Action<int, TItem> insertAction = null) 
+            : this(addAction, removeAction, insertAction)
         {
             _List = new RangeableList<TItem>(collection);
         }
@@ -37,7 +40,7 @@ namespace Rhyous.Collections
 
         public virtual Action<int, TItem> InsertAction
         {
-            get { return _InsertAction ?? (_InsertAction = (int index, TItem item) => { AddAction?.Invoke(item); }); }
+            get { return _InsertAction ?? (_InsertAction = (index, item) => { AddAction?.Invoke(item); }); }
             protected set { _InsertAction = value; }
         } private Action<int, TItem> _InsertAction;
 
@@ -51,6 +54,8 @@ namespace Rhyous.Collections
         }
 
         public virtual int Count => _List.Count;
+
+        public virtual int Capacity { get => _List.Capacity; set => _List.Capacity = value; }
 
         public virtual bool IsReadOnly => _List.IsReadOnly;
 

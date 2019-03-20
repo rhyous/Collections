@@ -32,5 +32,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IParent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IRangeableList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ITreeable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\MismatchedItems.cs" />
   </ItemGroup>
 </Project>

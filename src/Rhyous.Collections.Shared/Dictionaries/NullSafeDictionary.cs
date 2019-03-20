@@ -26,9 +26,9 @@ namespace Rhyous.Collections
         {
             get
             {
-                TValue client;
-                if (_Dictionary.TryGetValue(key, out client))
-                    return client;
+                TValue value;
+                if (_Dictionary.TryGetValue(key, out value))
+                    return value;
                 return _Dictionary[key] = DefaultValueProvider(key);
             }
             set { _Dictionary[key] = value; }
@@ -46,16 +46,13 @@ namespace Rhyous.Collections
             }
         }
 
-        public virtual TValue DefaultValueProvider(TKey key)
-        {
-            return DefaultValueProviderMethod(key);
-        }
+        public virtual TValue DefaultValueProvider(TKey key) => DefaultValueProviderMethod(key);
 
         public virtual Func<TKey, TValue> DefaultValueProviderMethod
         {
             get { return this._DefaultValueProviderMethod ?? (_DefaultValueProviderMethod => CreateInstance()); }
             set { _DefaultValueProviderMethod = value; }
-        }
+        } private Func<TKey, TValue> _DefaultValueProviderMethod;
 
         private static TValue CreateInstance()
         {
@@ -63,10 +60,6 @@ namespace Rhyous.Collections
                 return (TValue)Activator.CreateInstance(typeof(TValue), new char[0]);
             return (TValue)Activator.CreateInstance(typeof(TValue));
         }
-
-        private Func<TKey, TValue> _DefaultValueProviderMethod;
-
-
 
         #region Interface
 
@@ -80,60 +73,27 @@ namespace Rhyous.Collections
 
         public virtual TValue DefaultValue => default(TValue);
 
-        public virtual bool ContainsKey(TKey key)
-        {
-            return _Dictionary.ContainsKey(key);
-        }
+        public virtual bool ContainsKey(TKey key) => _Dictionary.ContainsKey(key);
 
-        public virtual void Add(TKey key, TValue value)
-        {
-            _Dictionary.Add(key, value);
-        }
+        public virtual void Add(TKey key, TValue value) => _Dictionary.Add(key, value);
 
-        public virtual bool Remove(TKey key)
-        {
-            return _Dictionary.Remove(key);
-        }
+        public virtual bool Remove(TKey key) => _Dictionary.Remove(key);
 
-        public virtual bool TryGetValue(TKey key, out TValue value)
-        {
-            return _Dictionary.TryGetValue(key, out value);
-        }
+        public virtual bool TryGetValue(TKey key, out TValue value) => _Dictionary.TryGetValue(key, out value);
 
-        public virtual void Add(KeyValuePair<TKey, TValue> item)
-        {
-            _Dictionary.Add(item);
-        }
+        public virtual void Add(KeyValuePair<TKey, TValue> item) => _Dictionary.Add(item);
 
-        public virtual void Clear()
-        {
-            _Dictionary.Clear();
-        }
+        public virtual void Clear() => _Dictionary.Clear();
 
-        public virtual bool Contains(KeyValuePair<TKey, TValue> item)
-        {
-            return _Dictionary.Contains(item);
-        }
+        public virtual bool Contains(KeyValuePair<TKey, TValue> item) => _Dictionary.Contains(item);
 
-        public virtual void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-        {
-            _Dictionary.CopyTo(array, arrayIndex);
-        }
+        public virtual void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) => _Dictionary.CopyTo(array, arrayIndex);
 
-        public virtual bool Remove(KeyValuePair<TKey, TValue> item)
-        {
-            return _Dictionary.Remove(item);
-        }
+        public virtual bool Remove(KeyValuePair<TKey, TValue> item) => _Dictionary.Remove(item);
 
-        public virtual IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
-        {
-            return _Dictionary.GetEnumerator();
-        }
+        public virtual IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => _Dictionary.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _Dictionary.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => _Dictionary.GetEnumerator();
         #endregion
     }
 }

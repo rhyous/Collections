@@ -14,7 +14,7 @@ namespace Rhyous.Collections
 
         public static bool IsEnumerable(this Type type)
         {
-            return type == typeof(IEnumerable) || (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IEnumerable<>)) || type.GetInterface(nameof(IEnumerable)) != null || type.GetInterface(typeof(IEnumerable<>).FullName) != null;
+            return type == typeof(IEnumerable) || (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IEnumerable<>)) || type.GetInterface(nameof(IEnumerable)) != null /* Is the last 'or' statement unreacheable? ---> */ || type.GetInterface(typeof(IEnumerable<>).FullName) != null;
         }
 
         public static bool IsList(this Type type)

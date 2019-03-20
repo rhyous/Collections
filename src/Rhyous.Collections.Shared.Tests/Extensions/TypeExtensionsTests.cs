@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Rhyous.Collections.Tests
 {
@@ -52,6 +54,33 @@ namespace Rhyous.Collections.Tests
         {
             Assert.IsTrue(typeof(List<>).IsCollection());
         }
+
+        class SubIntCollection : Collection<int> { }
+
+        [TestMethod]
+        public void TypeExtensions_IsCollection_SubCollectionInt_Test()
+        {
+            Assert.IsTrue(typeof(SubIntCollection).IsCollection());
+        }
+
+        class SubCollection<T> : ICollection<T>
+        {
+            public int Count => throw new NotImplementedException();
+            public bool IsReadOnly => throw new NotImplementedException();
+            public void Add(T item) => throw new NotImplementedException();
+            public void Clear() => throw new NotImplementedException();
+            public bool Contains(T item) => throw new NotImplementedException();
+            public void CopyTo(T[] array, int arrayIndex) => throw new NotImplementedException();
+            public IEnumerator<T> GetEnumerator() => throw new NotImplementedException();
+            public bool Remove(T item) => throw new NotImplementedException();
+            IEnumerator IEnumerable.GetEnumerator() => throw new NotImplementedException();
+        }
+
+        [TestMethod]
+        public void TypeExtensions_IsCollection_SubCollectionGeneric_Test()
+        {
+            Assert.IsTrue(typeof(SubCollection<>).IsCollection());
+        }
         #endregion
 
         #region IsEnumerable
@@ -71,6 +100,29 @@ namespace Rhyous.Collections.Tests
         public void TypeExtensions_IsEnumerableGenericString_Test()
         {
             Assert.IsTrue(typeof(IEnumerable<string>).IsEnumerable());
+        }
+
+        class SubObjectEnumerable : IEnumerable
+        {
+            public IEnumerator GetEnumerator() => throw new NotImplementedException();
+        }
+
+        [TestMethod]
+        public void TypeExtensions_IsEnumerable_SubEnumerable_Test()
+        {
+            Assert.IsTrue(typeof(SubObjectEnumerable).IsEnumerable());
+        }
+
+        class SubEnumerable<T> : IEnumerable<T>
+        {
+            public IEnumerator<T> GetEnumerator() => throw new NotImplementedException();
+            IEnumerator IEnumerable.GetEnumerator() => throw new NotImplementedException();
+        }
+
+        [TestMethod]
+        public void TypeExtensions_IsEnumerable_SubEnumerableGeneric_Test()
+        {
+            Assert.IsTrue(typeof(SubEnumerable<>).IsEnumerable());
         }
         #endregion
 
@@ -128,13 +180,13 @@ namespace Rhyous.Collections.Tests
         [TestMethod]
         public void TypeExtensions_IsDictionaryGenericString_Test()
         {
-            Assert.IsTrue(typeof(IDictionary<int,string>).IsDictionary());
+            Assert.IsTrue(typeof(IDictionary<int, string>).IsDictionary());
         }
 
         [TestMethod]
         public void TypeExtensions_IsDictionaryConcrete_Test()
         {
-            Assert.IsTrue(typeof(Dictionary<int,string>).IsDictionary());
+            Assert.IsTrue(typeof(Dictionary<int, string>).IsDictionary());
         }
 
         [TestMethod]
@@ -192,6 +244,26 @@ namespace Rhyous.Collections.Tests
             Assert.AreEqual(4, dict["D"]);
             Assert.AreEqual(5, dict["E"]);
             Assert.AreEqual(6, dict["F"]);
+        }
+
+        [TestMethod]
+        public void TypeExtensions_ToDictionary_NotEnum_Test()
+        {
+            // Arrange
+            var dict = typeof(Person).ToDictionary<Person>();
+
+            // Act & Assert
+            Assert.IsNull(dict);
+        }
+
+        [TestMethod]
+        public void TypeExtensions_ToDictionary_NotEnum_Object_Test()
+        {
+            // Arrange
+            var dict = typeof(Person).ToDictionary();
+
+            // Act & Assert
+            Assert.IsNull(dict);
         }
 
         [TestMethod]

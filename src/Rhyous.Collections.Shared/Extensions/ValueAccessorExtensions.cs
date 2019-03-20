@@ -9,7 +9,7 @@ namespace Rhyous.Collections
     /// </summary>
     public static class ValueAccessorExtensions
     {
-        public static StringComparison Comparison { get; set; } = StringComparison.InvariantCultureIgnoreCase;
+        public static StringComparison Comparison { get; set; } = StringComparison.OrdinalIgnoreCase;
 
         /// <summary>
         /// A static method to get the PropertyInfo of a property of any object.
@@ -19,7 +19,7 @@ namespace Rhyous.Collections
         /// <returns>PropertyInfo object. It has the property name and a useful GetValue() method.</returns>
         public static PropertyInfo GetPropertyInfo(this object o, string propertyName)
         {
-            return o.GetType().GetPropertyInfo(propertyName);
+            return o?.GetType().GetPropertyInfo(propertyName);
         }
 
         /// <summary>
@@ -30,8 +30,14 @@ namespace Rhyous.Collections
         /// <returns>PropertyInfo object. It has the property name and a useful GetValue() method.</returns>
         public static PropertyInfo GetPropertyInfo(this Type t, string propertyName)
         {
-            var props = t.GetProperties();
-            return props.FirstOrDefault(propInfo => propInfo.Name.Equals(propertyName, Comparison));
+            var props = t?.GetProperties();
+            var propinfo = props?.FirstOrDefault(propInfo => propInfo.Name.Equals(propertyName, Comparison));
+            if (propinfo == null)
+            {
+                props = t?.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic);
+               propinfo = props?.FirstOrDefault(propInfo => propInfo.Name.Equals(propertyName, Comparison));
+            }
+            return propinfo;
         }
 
         /// <summary>
@@ -73,7 +79,7 @@ namespace Rhyous.Collections
             int count = 0;
             while (obj == null && tmpType != null && count < 10)
             {
-                obj = tmpType.GetProperty("EntityType")?.GetValue(null);
+                obj = tmpType.GetProperty(propertyName)?.GetValue(null);
                 tmpType = tmpType.BaseType;
                 count++;
             }
@@ -88,7 +94,7 @@ namespace Rhyous.Collections
         /// <returns>FieldInfo object. It has the field name and a useful GetValue() method.</returns>
         public static FieldInfo GetFieldInfo(this object o, string fieldName)
         {
-            return o.GetType().GetFieldInfo(fieldName);
+            return o?.GetType().GetFieldInfo(fieldName);
         }
 
         /// <summary>
@@ -99,8 +105,14 @@ namespace Rhyous.Collections
         /// <returns>FieldInfo object. It has the field name and a useful GetValue() method.</returns>
         public static FieldInfo GetFieldInfo(this Type t, string fieldName)
         {
-            var fields = t.GetFields();
-            return fields.FirstOrDefault(fieldInfo => fieldInfo.Name.Equals(fieldName, Comparison));
+            var fields = t?.GetFields();
+            var field = fields?.FirstOrDefault(fi => fi.Name.Equals(fieldName, Comparison));
+            if (field == null)
+            {
+                fields = t?.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
+                field = fields?.FirstOrDefault(fieldInfo => fieldInfo.Name.Equals(fieldName, Comparison));
+            }
+            return field;
         }
 
         /// <summary>

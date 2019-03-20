@@ -60,29 +60,7 @@ namespace Rhyous.Collections
 
         public enum LeftOrRight { Left, Right }
 
-        /// <summary>
-        /// Used as a return type for IEnumerable<T>.GetMisMatchedItems().
-        /// </summary>
-        /// <typeparam name="T">The type of the lists being compared.</typeparam>
-        public class MismatchedItems<T> : IEnumerable<T>
-        {
-            public List<T> Right
-            {
-                get { return _Right ?? (_Right = new List<T>()); }
-                set { _Right = value; }
-            } private List<T> _Right;
-            public List<T> Left
-            {
-                get { return _Left ?? (_Left = new List<T>()); }
-                set { _Left = value; }
-            } private List<T> _Left;
-
-            public int Count => Right.Count + Left.Count;
-
-            public IEnumerator<T> GetEnumerator() => Left.Concat(Right).GetEnumerator();
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        }
+        
 
         /// <summary>
         /// Returns the differences between two unordered sequences of items.
@@ -139,7 +117,7 @@ namespace Rhyous.Collections
                 }
                 --leftDictionary[item];
             }
-            mismatchedItems.Left.AddRange(leftDictionary.Where(i => i.Value > 0)?.Select(kvp => kvp.Key));
+            mismatchedItems.Left.AddRange(leftDictionary.Where(i => i.Value > 0).Select(kvp => kvp.Key));
             if (nullCount == 0)
             {
                 return mismatchedItems;

@@ -9,6 +9,22 @@ namespace Rhyous.Collections.Tests.Collections
     {
 
         [TestMethod]
+        public void Constructor_IEnumerable()
+        {
+            // Arrange
+            var parent = new TestClass { Id = 0, Name = "Parent" };
+            var item1 = new TestClass { Id = 1, Name = "Item 1" };
+            var item2 = new TestClass { Id = 2, Name = "Item 1" };
+
+            // Act
+            var list = new ParentedList<TestClass>(parent, new[] { item1, item2 });
+
+            // Assert
+            Assert.AreEqual(parent, item1.Parent);
+            Assert.AreEqual(parent, item2.Parent);
+        }
+
+        [TestMethod]
         public void InvalidConstructor()
         {
             // Arrange
@@ -258,6 +274,37 @@ namespace Rhyous.Collections.Tests.Collections
             Assert.IsNull(item2.Parent);
             Assert.AreEqual(parent, parentedList[0].Parent);
             Assert.AreEqual(parent, parentedList[1].Parent);
+        }
+
+        [TestMethod]
+        public void RemoveParentNull()
+        {
+            // Arrange
+            var parent = new TestClass { Id = 0, Name = "Parent" };
+            var item1 = new TestClass { Id = 1, Name = "Item 1" };
+            var parentedList = new ParentedList<TestClass>(parent) { item1 };
+
+            // Act
+            parentedList.RemoveParent(null);
+
+            // Assert
+            Assert.AreEqual(parent, item1.Parent);
+        }
+
+        [TestMethod]
+        public void RemoveParentItemNotInList()
+        {
+            // Arrange
+            var parent = new TestClass { Id = 0, Name = "Parent" };
+            var item1 = new TestClass { Id = 1, Name = "Item 1" };
+            var parentedList = new ParentedList<TestClass>(parent) { item1 };
+            var item2 = new TestClass { Id = 2, Name = "Item 2" };
+
+            // Act
+            parentedList.RemoveParent(item2);
+
+            // Assert
+            Assert.AreEqual(parent, item1.Parent);
         }
     }
 }

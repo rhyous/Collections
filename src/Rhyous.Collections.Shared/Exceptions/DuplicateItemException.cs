@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Rhyous.Collections
 {
+    [ExcludeFromCodeCoverage]
     class DuplicateItemException : Exception
     {
         public DuplicateItemException()

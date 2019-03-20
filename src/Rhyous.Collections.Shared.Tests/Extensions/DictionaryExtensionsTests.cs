@@ -207,5 +207,75 @@ namespace Rhyous.Collections.Tests
             Assert.IsNull(dictionary[27]);
         }
         #endregion
+
+        #region AddRange
+        [TestMethod]
+        public void DictionaryExtensions_AddRange_NullDictionary_Test()
+        {
+            // Arrange
+            Dictionary<int, string> dictionary = null;
+            var kvps = new List<KeyValuePair<int, string>>
+            {
+                new KeyValuePair<int, string>(1, "val1"),
+                new KeyValuePair<int, string>(2, "val2")
+            };
+
+            // Act
+            dictionary.AddRange(kvps); // Does nothing
+
+            // Assert
+            Assert.IsNull(dictionary);
+        }
+
+        [TestMethod]
+        public void DictionaryExtensions_AddRange_KeyValuePairsNull_Test()
+        {
+            // Arrange
+            var dictionary = new Dictionary<int, string>();
+            IEnumerable<KeyValuePair<int, string>> kvps = null;
+
+            // Act
+            dictionary.AddRange(kvps); // Does nothing
+
+            // Assert
+            Assert.AreEqual(0, dictionary.Count);
+        }
+
+        [TestMethod]
+        public void DictionaryExtensions_AddRange_Test()
+        {
+            // Arrange
+            var dictionary = new Dictionary<int, string>();
+            var kvps = new List<KeyValuePair<int, string>>
+            {
+                new KeyValuePair<int, string>(1, "val1"),
+                new KeyValuePair<int, string>(2, "val2")
+            };
+
+            // Act
+            dictionary.AddRange(kvps); // Does nothing
+
+            // Assert
+            Assert.AreEqual(2, dictionary.Count);
+        }
+
+        [TestMethod]
+        public void DictionaryExtensions_AddRange_Array_Test()
+        {
+            // Arrange
+            var dictionary = new Dictionary<int, string>();
+            var kvps = new KeyValuePair<int, string>[]
+            {
+                new KeyValuePair<int, string>(1, "val1"),
+                new KeyValuePair<int, string>(2, "val2")
+            };
+
+            // Act
+            dictionary.AddRange(kvps); // Does nothing
+
+            // Assert
+            Assert.AreEqual(2, dictionary.Count);
+        }
+        #endregion
     }
 }

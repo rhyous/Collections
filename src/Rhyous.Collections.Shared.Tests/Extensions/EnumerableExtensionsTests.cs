@@ -453,6 +453,42 @@ namespace Rhyous.Collections.Tests.Dictionaries
         }
 
         /// <summary>
+        /// Scenario 5d - Lists same size and items are equal and some items are duplicated
+        /// </summary>
+        [TestMethod]
+        public void GetMisMatchedItemsAllMatchDuplicateItems_Right_Test()
+        {
+            // Arrange
+            IEnumerable<string> items1 = new List<string> { "A", "B", "C", "B" };
+            IEnumerable<string> items2 = new List<string> { "B", "C", "A", "B", "B" };
+
+            // Act
+            var actual = items1.GetMismatchedItems(items2);
+
+            // Assert
+            Assert.AreEqual(0, actual.Left.Count);
+            Assert.AreEqual(1, actual.Right.Count);
+        }
+
+        /// <summary>
+        /// Scenario 5d - Lists same size and items are equal and some items are duplicated
+        /// </summary>
+        [TestMethod]
+        public void GetMisMatchedItemsAllMatchDuplicateItems_Left_Test()
+        {
+            // Arrange
+            IEnumerable<string> items1 = new List<string> { "A", "B", "C", "B" };
+            IEnumerable<string> items2 = new List<string> { "B", "C", "A", "B", "B" };
+
+            // Act
+            var actual = items2.GetMismatchedItems(items1);
+
+            // Assert
+            Assert.AreEqual(1, actual.Left.Count);
+            Assert.AreEqual(0, actual.Right.Count);
+        }
+
+        /// <summary>
         /// Scenario 5e - Lists same size and items are not equal, one side has more nulls and less items
         /// </summary>
         [TestMethod]
@@ -488,6 +524,26 @@ namespace Rhyous.Collections.Tests.Dictionaries
             // Assert
             Assert.AreEqual(0, actual.Left.Count);
             Assert.AreEqual(0, actual.Right.Count);
+        }
+
+        /// <summary>
+        /// Scenario 5e - Lists same size and items are not equal, one side has more nulls and less items
+        /// </summary>
+        [TestMethod]
+        public void GetMisMatchedItemsDifferentNumberOfNullItems_MoreNullsOnLeft_Test()
+        {
+            // Arrange
+            IEnumerable<string> items1 = new List<string> { "A", "B", "C", null, "E", "B" };
+            IEnumerable<string> items2 = new List<string> { "B", "C", null, "A", null, "E" };
+
+            // Act
+            var actual = items2.GetMismatchedItems(items1);
+
+            // Assert
+            Assert.AreEqual(1, actual.Right.Count);
+            Assert.AreEqual("B", actual.Right[0]);
+            Assert.AreEqual(1, actual.Left.Count);
+            Assert.AreEqual(null, actual.Left[0]);
         }
         #endregion
     }

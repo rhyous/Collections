@@ -106,6 +106,21 @@ namespace Rhyous.Collections.Tests
             Assert.AreEqual(0, list.Count);
         }
 
+        [TestMethod]
+        public void ListExtensions_Clear_List_ActionNull_Enumerable_Test()
+        {
+            // Arrange
+            IList<int> list = new List<int> { 1, 2, 3 };
+            Action<IEnumerable<int>> action = null;
+
+            // Act
+            list.Clear(action);
+
+            // Assert
+            Assert.AreEqual(0, list.Count);
+        }
+
+        [TestMethod]
         public void ListExtensions_Clear_List_ActionCalled_EnumerableAction_Test()
         {
             // Arrange
@@ -513,6 +528,21 @@ namespace Rhyous.Collections.Tests
             Assert.AreEqual(6, list.Count);
         }
 
+        [TestMethod]
+        public void ListExtensions_AddRange_List_ActionNull_Enumerable_Test()
+        {
+            // Arrange
+            IList<int> list = new List<int> { 1, 2, 3 };
+            Action<IEnumerable<int>> action = null;
+
+            // Act
+            list.AddRange(new[] { 5, 7, 11 }, action);
+
+            // Assert
+            Assert.AreEqual(6, list.Count);
+        }
+
+        [TestMethod]
         public void ListExtensions_AddRange_List_ActionCalled_EnumerableAction_Test()
         {
             // Arrange
@@ -588,6 +618,7 @@ namespace Rhyous.Collections.Tests
             Assert.AreEqual(6, list.Count);
         }
 
+        [TestMethod]
         public void ListExtensions_AddRange_List_ActionCalled_EnumerableAction_NotListT_Test()
         {
             // Arrange
@@ -706,6 +737,21 @@ namespace Rhyous.Collections.Tests
         }
 
         [TestMethod]
+        public void ListExtensions_InsertRange_List_ItemsNull_Enumerable_ActionNotCalled_Test()
+        {
+            // Arrange
+            IList<int> list = new List<int> { 1, 2, 3 };
+            int timesCalled = 0;
+
+            // Act
+            list.InsertRange(1, new int[] { }, (IEnumerable<int> items) => { timesCalled++; });
+
+            // Assert
+            Assert.AreEqual(3, list.Count);
+            Assert.AreEqual(0, timesCalled);
+        }
+
+        [TestMethod]
         public void ListExtensions_InsertRange_List_ActionCalled_Test()
         {
             // Arrange
@@ -734,6 +780,7 @@ namespace Rhyous.Collections.Tests
             Assert.AreEqual(6, list.Count);
         }
 
+        [TestMethod]
         public void ListExtensions_InsertRange_List_ActionCalled_EnumerableAction_Test()
         {
             // Arrange
@@ -808,6 +855,7 @@ namespace Rhyous.Collections.Tests
             Assert.AreEqual(6, list.Count);
         }
 
+        [TestMethod]
         public void ListExtensions_InsertRange_List_ActionCalled_EnumerableAction_NotListT_Test()
         {
             // Arrange
@@ -919,6 +967,7 @@ namespace Rhyous.Collections.Tests
             Assert.AreEqual(3, list.Count);
         }
 
+        [TestMethod]
         public void ListExtensions_RemoveRange_List_ActionCalled_EnumerableAction__Test()
         {
             // Arrange
@@ -929,7 +978,7 @@ namespace Rhyous.Collections.Tests
             list.RemoveRange(3, 6, (IEnumerable<int> i) => { timesCalled++; });
 
             // Assert
-            Assert.AreEqual(6, list.Count);
+            Assert.AreEqual(3, list.Count);
             Assert.AreEqual(1, timesCalled);
         }
 
@@ -980,6 +1029,7 @@ namespace Rhyous.Collections.Tests
             Assert.AreEqual(6, list.Count);
         }
 
+        [TestMethod]
         public void ListExtensions_RemoveRange_List_ActionCalled_EnumerableAction_NotListT_Test()
         {
             // Arrange
