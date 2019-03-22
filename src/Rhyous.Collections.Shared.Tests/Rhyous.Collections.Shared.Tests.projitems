@@ -17,9 +17,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Collections\TreeTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\UniqueListTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Dictionaries\NullSafeDictionaryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ArrayMakerTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\DictionaryDefaultValueProviderExtensionsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\DictionaryExtensionsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ListExtensionsTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ListMakerTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\QueryableExtensionsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TypeExtensionsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\EnumerableExtensionsTests.cs" />
