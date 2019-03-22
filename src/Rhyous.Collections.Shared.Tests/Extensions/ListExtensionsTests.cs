@@ -540,6 +540,19 @@ namespace Rhyous.Collections.Tests
         }
 
         [TestMethod]
+        public void ListExtensions_AddRange_List_ChildHasAddRange_NoAction_Test()
+        {
+            // Arrange
+            var list = new List<int> { 1, 2, 3 };
+
+            // Act
+            list.AddRange(new[] { 5, 7, 11 }); // Should not have an ambiguous method exception.
+
+            // Assert
+            Assert.AreEqual(6, list.Count);
+        }
+
+        [TestMethod]
         public void ListExtensions_AddRange_UniqueList_NoAction_Test()
         {
             // Arrange
