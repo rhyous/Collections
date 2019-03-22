@@ -133,11 +133,12 @@ namespace Rhyous.Collections
         #region AddRange
 
         /// <summary>
-        /// Provides and AddRange with an action.
+        /// Provides and AddRange to IList. List has it but IList doesn't without this extension.
         /// </summary>
         /// <typeparam name="T">The type of item in the list.</typeparam>
         /// <param name="list">The list.</param>
         /// <param name="items">The items to add.</param>
+        /// <remarks>This doesn't throw an exception items is null.</remarks>
         public static void AddRange<T>(this IList<T> list, IEnumerable<T> items)
         {
             ListIsNotNull(list, nameof(list));
@@ -164,6 +165,7 @@ namespace Rhyous.Collections
         /// <param name="items">The items to add.</param>
         /// <param name="onAddAction">The action to run after the items are added.</param>
         /// <remarks>The action is run n times, once for each item.</remarks>
+        /// <remarks>This doesn't throw an exception items is null.</remarks>
         public static void AddRange<T>(this IList<T> list, IEnumerable<T> items, Action<T> onAddAction)
         {
             ListIsNotNull(list, nameof(list));
