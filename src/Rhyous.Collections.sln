@@ -1,60 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Collections.Net461", "Rhyous.Collections.Net461\Rhyous.Collections.Net461.csproj", "{0E3FDDDC-DEDD-451D-8356-358C471FCDD7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Collections", "Rhyous.Collections\Rhyous.Collections.csproj", "{820A1D85-4D89-4DBC-B5AA-04F85DDA723B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Collections.Net461.Tests", "Rhyous.Collections.Net461.Tests\Rhyous.Collections.Net461.Tests.csproj", "{0708DDE1-DBE4-469D-9FBE-0DF20413E0B9}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Rhyous.Collections.Shared", "Rhyous.Collections.Shared\Rhyous.Collections.Shared.shproj", "{A67BCA77-137B-4924-AC4A-6FEC69F49A6E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{25686ED3-4594-4EC1-8BD4-6CA054E05572}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Collections.NuGet", "NuGet\Rhyous.Collections.NuGet\Rhyous.Collections.NuGet.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Rhyous.Collections.Shared.Tests", "Rhyous.Collections.Shared.Tests\Rhyous.Collections.Shared.Tests.shproj", "{55EB4D58-DCD6-4AA2-983A-D5F96F0FEA9D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rhyous.Collections.NetStandard2.0", "Rhyous.Collections.NetStandard2.0\Rhyous.Collections.NetStandard2.0.csproj", "{136C4413-EFE3-460F-8D38-3B8B15932D17}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rhyous.Collections.NetCore2.0.Tests", "Rhyous.Collections.NetCore2.0.Tests\Rhyous.Collections.NetCore2.0.Tests.csproj", "{FE0DACEB-A57B-4928-9F0B-77B651F79A8E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Collections.Tests", "Rhyous.Collections.Tests\Rhyous.Collections.Tests.csproj", "{0C209505-812F-4434-82D0-97093998DFA0}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Rhyous.Collections.Shared.Tests\Rhyous.Collections.Shared.Tests.projitems*{0708dde1-dbe4-469d-9fbe-0df20413e0b9}*SharedItemsImports = 4
-		Rhyous.Collections.Shared\Rhyous.Collections.Shared.projitems*{0e3fdddc-dedd-451d-8356-358c471fcdd7}*SharedItemsImports = 4
-		Rhyous.Collections.Shared.Tests\Rhyous.Collections.Shared.Tests.projitems*{55eb4d58-dcd6-4aa2-983a-d5f96f0fea9d}*SharedItemsImports = 13
-		Rhyous.Collections.Shared\Rhyous.Collections.Shared.projitems*{a67bca77-137b-4924-ac4a-6fec69f49a6e}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0E3FDDDC-DEDD-451D-8356-358C471FCDD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E3FDDDC-DEDD-451D-8356-358C471FCDD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E3FDDDC-DEDD-451D-8356-358C471FCDD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0E3FDDDC-DEDD-451D-8356-358C471FCDD7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0708DDE1-DBE4-469D-9FBE-0DF20413E0B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0708DDE1-DBE4-469D-9FBE-0DF20413E0B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0708DDE1-DBE4-469D-9FBE-0DF20413E0B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0708DDE1-DBE4-469D-9FBE-0DF20413E0B9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{136C4413-EFE3-460F-8D38-3B8B15932D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{136C4413-EFE3-460F-8D38-3B8B15932D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{136C4413-EFE3-460F-8D38-3B8B15932D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{136C4413-EFE3-460F-8D38-3B8B15932D17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE0DACEB-A57B-4928-9F0B-77B651F79A8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE0DACEB-A57B-4928-9F0B-77B651F79A8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE0DACEB-A57B-4928-9F0B-77B651F79A8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE0DACEB-A57B-4928-9F0B-77B651F79A8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{820A1D85-4D89-4DBC-B5AA-04F85DDA723B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{820A1D85-4D89-4DBC-B5AA-04F85DDA723B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{820A1D85-4D89-4DBC-B5AA-04F85DDA723B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{820A1D85-4D89-4DBC-B5AA-04F85DDA723B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C209505-812F-4434-82D0-97093998DFA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C209505-812F-4434-82D0-97093998DFA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C209505-812F-4434-82D0-97093998DFA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C209505-812F-4434-82D0-97093998DFA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{0451BAEF-DF2E-4B98-8644-94EE9415E389} = {25686ED3-4594-4EC1-8BD4-6CA054E05572}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {436345C0-7F6B-4974-B0FD-E1CBDD881B82}
