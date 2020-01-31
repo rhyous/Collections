@@ -21,6 +21,8 @@ test:
     - slow
 artifacts:
   - path: '**\*.nupkg'
+nuget:
+  disable_publish_on_pr: true
 deploy:
 - provider: NuGet
   on:
