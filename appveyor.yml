@@ -10,6 +10,8 @@ dotnet_csproj:
   informational_version: '{version}'
 before_build:
 - pwsh: nuget restore src/Rhyous.Collections.sln
+configuration:
+  Release
 build:
   project: src/Rhyous.Collections.sln
   verbosity: minimal
