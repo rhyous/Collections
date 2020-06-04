@@ -236,6 +236,31 @@ namespace Rhyous.Collections
         /// <param name="list">The list.</param>
         /// <param name="index">The index.</param>
         /// <param name="items">The items to insert.</param>
+        public static void InsertRange<T>(this IList<T> list, int index, IEnumerable<T> items)
+        {
+            ListIsNotNull(list, nameof(list));
+            ListIsNotNull(items, nameof(items));
+            if (!items.Any())
+                return;
+            var itemsList = items.ToList();
+            if (list is List<T> concreteList)
+            {
+                concreteList.InsertRange(index, itemsList);
+                return;
+            }
+            for (int i = 0; i < itemsList.Count; i++)
+            {
+                list.Insert(i + index, itemsList[i]);
+            }
+        }
+
+        /// <summary>
+        /// Adds insert range to IList with an action after all are inserted.
+        /// </summary>
+        /// <typeparam name="T">The type of item in the list.</typeparam>
+        /// <param name="list">The list.</param>
+        /// <param name="index">The index.</param>
+        /// <param name="items">The items to insert.</param>
         /// <param name="onInsertAction">The action to run on insert.</param>
         /// <remarks>Runs the action one times, once for all added items.</remarks>
         public static void InsertRange<T>(this IList<T> list, int index, IEnumerable<T> items, Action<IEnumerable<T>> onInsertAction)
@@ -259,7 +284,7 @@ namespace Rhyous.Collections
         }
 
         /// <summary>
-        /// Adds insert range to IList.
+        /// Adds insert range to IList with an action after each is inserted.
         /// </summary>
         /// <typeparam name="T">The type of item in the list.</typeparam>
         /// <param name="list">The list.</param>
