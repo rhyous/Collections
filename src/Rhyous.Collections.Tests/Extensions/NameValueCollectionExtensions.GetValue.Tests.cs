@@ -4,7 +4,6 @@ using System.Collections.Specialized;
 
 namespace Rhyous.Collections.Tests.Extensions
 {
-    [TestClass]
     public partial class NameValueCollectionExtensionsTests
     {
         [TestMethod]

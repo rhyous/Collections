@@ -93,5 +93,23 @@
             }
             return sbQuery.ToString();
         }
+
+        /// <summary>
+        /// Appens a value to a key.
+        /// </summary>
+        /// <param name="collection">The NameValueCollection</param>
+        /// <param name="key">The Key to the item in the collection</param>
+        /// <param name="append">The string to append.</param>
+        /// <param name="separator">A separator, which by default is blank.</param>
+        public static void AppendToValue(this NameValueCollection collection, string key, string append, string separator = "")
+        {
+            if (collection is null) { throw new ArgumentNullException(nameof(collection)); }
+            if (string.IsNullOrWhiteSpace(key)) { throw new ArgumentException(nameof(key)); }
+            if (string.IsNullOrWhiteSpace(append)) { return; }
+
+            var filterValue = collection.Get(key, "");
+            filterValue = string.IsNullOrWhiteSpace(filterValue) ? append : filterValue += $"{separator}{append}";
+            collection.Set(key, filterValue);
+        }
     }
 }
