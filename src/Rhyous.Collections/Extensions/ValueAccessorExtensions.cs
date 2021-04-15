@@ -30,14 +30,16 @@ namespace Rhyous.Collections
         /// <returns>PropertyInfo object. It has the property name and a useful GetValue() method.</returns>
         public static PropertyInfo GetPropertyInfo(this Type t, string propertyName)
         {
-            var props = t?.GetProperties();
-            var propinfo = props?.FirstOrDefault(propInfo => propInfo.Name.Equals(propertyName, Comparison));
-            if (propinfo == null)
-            {
-                props = t?.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic);
-               propinfo = props?.FirstOrDefault(propInfo => propInfo.Name.Equals(propertyName, Comparison));
-            }
-            return propinfo;
+            if (t is null || string.IsNullOrEmpty(propertyName)) { return null; }
+
+                   // 1. Look for public exact name
+            return t.GetProperty(propertyName)
+                   // 2. Look for public case insensitive name
+                   ?? t.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase)
+                   // 3. Look for non-public exact name
+                   ?? t.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.NonPublic)
+                   // 4. Look for non-public case insensitive name
+                   ?? t.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.IgnoreCase);
         }
 
         /// <summary>
@@ -105,14 +107,16 @@ namespace Rhyous.Collections
         /// <returns>FieldInfo object. It has the field name and a useful GetValue() method.</returns>
         public static FieldInfo GetFieldInfo(this Type t, string fieldName)
         {
-            var fields = t?.GetFields();
-            var field = fields?.FirstOrDefault(fi => fi.Name.Equals(fieldName, Comparison));
-            if (field == null)
-            {
-                fields = t?.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
-                field = fields?.FirstOrDefault(fieldInfo => fieldInfo.Name.Equals(fieldName, Comparison));
-            }
-            return field;
+            if (t is null || string.IsNullOrWhiteSpace(fieldName)) { return null; }
+
+            // 1. Look for public exact name
+            return t.GetField(fieldName)
+                   // 2. Look for public case insensitive name
+                   ?? t.GetField(fieldName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase)
+                   // 3. Look for non-public exact name
+                   ?? t.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic)
+                   // 4. Look for non-public case insensitive name
+                   ?? t.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.IgnoreCase);
         }
 
         /// <summary>
