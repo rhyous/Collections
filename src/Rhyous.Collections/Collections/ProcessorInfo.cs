@@ -2,7 +2,7 @@
 
 namespace Rhyous.Collections
 {
-    internal static class PlatformHelper
+    internal static class ProcessorInfo
     {
         private const int ProcessorCountRefreshIntervalMs = 30000;
 

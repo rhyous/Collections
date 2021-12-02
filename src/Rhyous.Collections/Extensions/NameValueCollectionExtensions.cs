@@ -7,10 +7,11 @@
     using System.Linq;
     using System.Text;
 
+    /// <summary>Extensions for <see cref="NameValueCollection"/>.</summary>
     public static class NameValueCollectionExtensions
     {
         /// <summary>
-        /// While this method works with some other NameValueCollection instances, it was specifically designed to make getting a typed value back from an app.config or web.config using ConfigurationManager.AppSettings.
+        /// While this method works with some other <see cref="NameValueCollection"/> instances, it was specifically designed to make getting a typed value back from an app.config or web.config using ConfigurationManager.AppSettings.
         /// Example usage to return a bool:
         ///   Web.config appseting
         ///     {appSettings file="dev.config"}
@@ -20,7 +21,7 @@
         ///     ConfigurationManager.AppSettings.Get("Setting1", true);
         /// </summary>
         /// <typeparam name="T">The type to return.</typeparam>
-        /// <param name="collection">The NameValueCollection, usually from ConfigurationManager.AppSettings.</param>
+        /// <param name="collection">The <see cref="NameValueCollection"/>, usually from ConfigurationManager.AppSettings.</param>
         /// <param name="key">The key is a string identifier of the item in the collection.</param>
         /// <param name="defaultValue">If the key is not found, or if the value is null, empty, or whitespace, or cannot be converted, this specified default value is used.</param>
         /// <returns></returns>
@@ -37,19 +38,28 @@
             return (T)(converter.ConvertFromInvariantString(value));
         }
 
-        public static NameValueCollection Clone(this NameValueCollection collection, params string[] excludeParams)
+        /// <summary>Clones the <see cref="NameValueCollection"/>.</summary>
+        /// <param name="collection">The collection to clone.</param>
+        /// <param name="keysToExclude">The keys to exclude.</param>
+        /// <returns>A clone of the <see cref="NameValueCollection"/>, without the keys to exclude.</returns>
+        public static NameValueCollection Clone(this NameValueCollection collection, params string[] keysToExclude)
         {
-            return collection.Clone(null, excludeParams);
+            return collection.Clone(null, keysToExclude);
         }
 
-        public static NameValueCollection Clone(this NameValueCollection collection, IEqualityComparer<string> comparer, params string[] excludeParams)
+        /// <summary>Clones the <see cref="NameValueCollection"/>.</summary>
+        /// <param name="collection">The collection to clone.</param>
+        /// <param name="comparer">The <see cref="T:IEqualityComparer{string}"/> for matching the key. If null, <see cref="StringComparer.CurrentCultureIgnoreCase"/> is used.</param>
+        /// <param name="keysToExclude">The keys to exclude.</param>
+        /// <returns>A clone of the <see cref="NameValueCollection"/>, without the keys to exclude.</returns>
+        public static NameValueCollection Clone(this NameValueCollection collection, IEqualityComparer<string> comparer, params string[] keysToExclude)
         {
             var clonedCollection = new NameValueCollection();
             if (comparer == null)
                 comparer = StringComparer.CurrentCultureIgnoreCase;
             foreach (string key in collection.Keys)
             {
-                if (!excludeParams.Contains(key, comparer))
+                if (!keysToExclude.Contains(key, comparer))
                     clonedCollection.Add(key, collection[key]);
             }
             return clonedCollection;
@@ -60,7 +70,7 @@
         /// </summary>
         /// <param name="collection">the name value collection.</param>
         /// <param name="prefix">Default: "?". Most Url parameters start with a "?". Set this to "" to not have the starting question mark.</param>
-        /// <param name="separator">Default: "&". Most Url parameters are separated with an ampersand "&".</param>
+        /// <param name="separator">Default: "&amp;". Most Url parameters are separated with an ampersand "&amp;".</param>
         /// <returns>The NameValueCollection as a Url query string.</returns>
         public static string ToUrlQueryString(this NameValueCollection collection, string prefix = "?", string separator = "&")
         {

@@ -15,12 +15,16 @@
     <PackageTags>List, Collection, Dictionary</PackageTags>
     <Copyright>Copyright (c) 2016, Jared Barneck (Rhyous)</Copyright>
     <Description>Extension to the .NET System.Collections library (C#)</Description>
-    <GeneratePackageOnBuild Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.2.0</Version>
     <AssemblyVersion>1.2.0.0</AssemblyVersion>
     <FileVersion>1.2.0.0</FileVersion>
   </PropertyGroup>
-
+  
+  <PropertyGroup>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  
   <ItemGroup>
     <None Include="..\..\License.txt">
       <Pack>True</Pack>

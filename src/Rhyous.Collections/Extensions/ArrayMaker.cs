@@ -244,6 +244,7 @@ namespace Rhyous.Collections
         /// Makes are array from parameters.
         /// </summary>
         /// <typeparam name="T">The type the array holds.</typeparam>
+        /// <param name="item1">An item to add.</param>
         /// <param name="items">The items to include when making the array.</param>
         /// <returns>The created array.</returns>
         public static T[] Make<T>(T item1, params T[] items)
@@ -257,6 +258,8 @@ namespace Rhyous.Collections
         /// Makes are array from parameters.
         /// </summary>
         /// <typeparam name="T">The type the array holds.</typeparam>
+        /// <param name="item1">An item to add.</param>
+        /// <param name="item2">An item to add.</param>
         /// <param name="items">The items to include when making the array.</param>
         /// <returns>The created array.</returns>
         public static T[] Make<T>(T item1, T item2, params T[] items)
@@ -270,6 +273,9 @@ namespace Rhyous.Collections
         /// Makes are array from parameters.
         /// </summary>
         /// <typeparam name="T">The type the array holds.</typeparam>
+        /// <param name="item1">An item to add.</param>
+        /// <param name="item2">An item to add.</param>
+        /// <param name="item3">An item to add.</param>
         /// <param name="items">The items to include when making the array.</param>
         /// <returns>The created array.</returns>
         public static T[] Make<T>(T item1, T item2, T item3, params T[] items)
@@ -283,6 +289,10 @@ namespace Rhyous.Collections
         /// Makes are array from parameters.
         /// </summary>
         /// <typeparam name="T">The type the array holds.</typeparam>
+        /// <param name="item1">An item to add.</param>
+        /// <param name="item2">An item to add.</param>
+        /// <param name="item3">An item to add.</param>
+        /// <param name="item4">An item to add.</param>
         /// <param name="items">The items to include when making the array.</param>
         /// <returns>The created array.</returns>
         public static T[] Make<T>(T item1, T item2, T item3, T item4, params T[] items)
@@ -296,6 +306,11 @@ namespace Rhyous.Collections
         /// Makes are array from parameters.
         /// </summary>
         /// <typeparam name="T">The type the array holds.</typeparam>
+        /// <param name="item1">An item to add.</param>
+        /// <param name="item2">An item to add.</param>
+        /// <param name="item3">An item to add.</param>
+        /// <param name="item4">An item to add.</param>
+        /// <param name="item5">An item to add.></param>
         /// <param name="items">The items to include when making the array.</param>
         /// <returns>The created array.</returns>
         public static T[] Make<T>(T item1, T item2, T item3, T item4, T item5, params T[] items)

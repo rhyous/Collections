@@ -181,6 +181,52 @@ namespace Rhyous.Collections.Tests
             Assert.IsNull(value);
         }
 
+        [TestMethod]
+        public void TypeExtensions_GetPropertyInfoCaseSafe_Test()
+        {
+            // Arrange
+            var type = typeof(Person);
+            var name = nameof(Person.Name);
+
+            // Act
+            var lowerResult = type.GetPropertyInfo(name.ToLower());
+            var upperResult = type.GetPropertyInfo(name.ToUpper());
+            var exactResult = type.GetPropertyInfo(name);
+
+            // Assert
+            Assert.AreEqual(name, lowerResult.Name);
+            Assert.AreEqual(name, upperResult.Name);
+            Assert.AreEqual(name, exactResult.Name);
+        }
+
+        /// <summary>
+        /// If an Entity has this situation, you have to be case exact.
+        /// </summary>
+        [TestMethod]
+        public void TypeExtensions_GetPropertyInfoCaseSafe_EntityWithCaseDifferentProps_Test()
+        {
+            // Arrange
+            var pascalCase = nameof(EntityWithCaseDifferentProps.SomeId);
+            var camelCase = nameof(EntityWithCaseDifferentProps.someId);
+            var lower = nameof(EntityWithCaseDifferentProps.someId);
+            var upper = lower.ToUpper();
+            var type = typeof(EntityWithCaseDifferentProps);
+
+            // Act
+            var pascalResult= type.GetPropertyInfo(pascalCase);
+            var camelResult = type.GetPropertyInfo(camelCase);
+            var lowerResult = type.GetPropertyInfo(lower);
+            Assert.ThrowsException<AmbiguousMatchException>(() =>
+            {
+                type.GetPropertyInfo(upper);
+            });
+
+            // Assert
+            Assert.AreEqual(pascalCase, pascalResult.Name);
+            Assert.AreEqual(camelCase, camelResult.Name);
+            Assert.AreEqual(lower, lowerResult.Name);
+        }
+
         #endregion
 
         #region GetPropertyValue returns object
@@ -399,6 +445,22 @@ namespace Rhyous.Collections.Tests
 
             // Assert
             Assert.AreEqual(27, value);
+        }
+        
+        internal class AStaticObj { public static object O => 27; }
+        internal class BStaticObj : AStaticObj { public new static object O => null; }
+
+        [TestMethod]
+        public void ValueAccessorExtensions_GetStaticPropertyValue_PropertyNotExists_InheritedStatic_ValueNull_Test()
+        {
+            // Arrange
+            Type t = typeof(BStaticObj);
+
+            // Act
+            var value = t.GetStaticPropertyValue("O");
+
+            // Assert
+            Assert.AreEqual(null, value);
         }
         #endregion
 
