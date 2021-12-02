@@ -446,6 +446,22 @@ namespace Rhyous.Collections.Tests
             // Assert
             Assert.AreEqual(27, value);
         }
+        
+        internal class AStaticObj { public static object O => 27; }
+        internal class BStaticObj : AStaticObj { public new static object O => null; }
+
+        [TestMethod]
+        public void ValueAccessorExtensions_GetStaticPropertyValue_PropertyNotExists_InheritedStatic_ValueNull_Test()
+        {
+            // Arrange
+            Type t = typeof(BStaticObj);
+
+            // Act
+            var value = t.GetStaticPropertyValue("O");
+
+            // Assert
+            Assert.AreEqual(null, value);
+        }
         #endregion
 
         #region GetFieldInfo from Object

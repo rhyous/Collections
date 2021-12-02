@@ -4,49 +4,44 @@ using System.Linq;
 
 namespace Rhyous.Collections
 {
+    /// <summary>Extension methods for IList{T}.</summary>
     public static class ListExtensions
     {
         #region Add
-        /// <summary>
-        /// Provides an add method with an action on add.
-        /// </summary>
+        /// <summary>Provides an add method with an action on add.</summary>
         /// <typeparam name="T">The type of item in the list.</typeparam>
         /// <param name="list">The list.</param>
         /// <param name="item">The item to add.</param>
         /// <param name="onAddAction">The action to run after the item is added.</param>
         public static void Add<T>(this IList<T> list, T item, Action<T> onAddAction = null)
         {
-            ListIsNotNull(list, nameof(list));
+            list.ThrowIfNull(nameof(list));
             list.Add(item);
             onAddAction?.Invoke(item);
         }
         #endregion
 
         #region Clear
-        /// <summary>
-        /// Provides an clear method with an action.
-        /// </summary>
+        /// <summary>Provides an clear method with an action.</summary>
         /// <typeparam name="T">The type of item in the list.</typeparam>
         /// <param name="list">The list.</param>
         /// <param name="onClearAction">The action to run. It runs n times, once for each item cleared.</param>
         public static void Clear<T>(this IList<T> list, Action<T> onClearAction = null)
         {
-            ListIsNotNull(list, nameof(list));
+            list.ThrowIfNull(nameof(list));
             var tmpList = list.ToList();
             list.Clear();
             foreach (var item in tmpList)
                 onClearAction?.Invoke(item);
         }
 
-        /// <summary>
-        /// Provides an clear method with a bulk action.
-        /// </summary>
+        /// <summary>Provides an clear method with a bulk action.</summary>
         /// <typeparam name="T">The type of item in the list.</typeparam>
         /// <param name="list">The list.</param>
         /// <param name="onClearAction">The action to run. It runs 1 time for all items cleared.</param>
         public static void Clear<T>(this IList<T> list, Action<IEnumerable<T>> onClearAction = null)
         {
-            ListIsNotNull(list, nameof(list));
+            list.ThrowIfNull(nameof(list));
             var tmpList = list.ToList();
             list.Clear();
             onClearAction?.Invoke(tmpList);
@@ -54,9 +49,7 @@ namespace Rhyous.Collections
         #endregion
 
         #region Insert
-        /// <summary>
-        /// Provides an insert method with an action on insert.
-        /// </summary>
+        /// <summary>Provides an insert method with an action on insert.</summary>
         /// <typeparam name="T">The type of item in the list.</typeparam>
         /// <param name="list">The list.</param>
         /// <param name="index">The index to insert.</param>
@@ -64,23 +57,21 @@ namespace Rhyous.Collections
         /// <param name="onInsertAction">The action to run after the item is inserted.</param>
         public static void Insert<T>(this IList<T> list, int index, T item, Action<int, T> onInsertAction = null)
         {
-            ListIsNotNull(list, nameof(list));
+            list.ThrowIfNull(nameof(list));
             list.Insert(index, item);
             onInsertAction?.Invoke(index, item);
         }
         #endregion
 
         #region Remove
-        /// <summary>
-        /// Provides a remove method with an action on remove.
-        /// </summary>
+        /// <summary>Provides a remove method with an action on remove.</summary>
         /// <typeparam name="T">The type of item in the list.</typeparam>
         /// <param name="list">The list.</param>
         /// <param name="item">The item to remove.</param>
         /// <param name="onRemoveAction">The action to run after the item is removed.</param>
         public static bool Remove<T>(this IList<T> list, T item, Action<T> onRemoveAction = null)
         {
-            ListIsNotNull(list, nameof(list));
+            list.ThrowIfNull(nameof(list));
             var result = list.Remove(item);
             if (result)
                 onRemoveAction?.Invoke(item);
@@ -89,9 +80,7 @@ namespace Rhyous.Collections
         #endregion
 
         #region RemoveAny
-        /// <summary>
-        /// Provides a remove method for multiple items with an action on remove.
-        /// </summary>
+        /// <summary>Provides a remove method for multiple items with an action on remove.</summary>
         /// <typeparam name="T">The type of item in the list.</typeparam>
         /// <param name="list">The list.</param>
         /// <param name="items">The items to remove.</param>
@@ -99,7 +88,7 @@ namespace Rhyous.Collections
         /// <remarks>It runs 1 time for all removed items. It only runs for removed items. Items not removed because they were not in the list do not run the action.</remarks>
         public static void RemoveAny<T>(this IList<T> list, IEnumerable<T> items, Action<IEnumerable<T>> onRemoveAction = null)
         {
-            ListIsNotNull(list, nameof(list));
+            list.ThrowIfNull(nameof(list));
             if (items == null || !items.Any())
                 return;
             var removed = new List<T>();
@@ -114,16 +103,14 @@ namespace Rhyous.Collections
         #endregion
 
         #region RemoveAt
-        /// <summary>
-        /// Provides a remove method with an action on remove.
-        /// </summary>
+        /// <summary>Provides a remove method with an action on remove.</summary>
         /// <typeparam name="T">The type of item in the list.</typeparam>
         /// <param name="list">The list.</param>
         /// <param name="index">The index of the item to remove.</param>
         /// <param name="onRemoveAction">The action to run after the item is removed.</param>
         public static void RemoveAt<T>(this IList<T> list, int index, Action<T> onRemoveAction = null)
         {
-            ListIsNotNull(list, nameof(list));
+            list.ThrowIfNull(nameof(list));
             var item = list[index];
             list.RemoveAt(index);
             onRemoveAction?.Invoke(item);
@@ -132,20 +119,17 @@ namespace Rhyous.Collections
 
         #region AddRange
 
-        /// <summary>
-        /// Provides and AddRange to IList. List has it but IList doesn't without this extension.
-        /// </summary>
+        /// <summary>Provides and AddRange to IList. List has it but IList doesn't without this extension.</summary>
         /// <typeparam name="T">The type of item in the list.</typeparam>
         /// <param name="list">The list.</param>
         /// <param name="items">The items to add.</param>
         /// <remarks>This doesn't throw an exception items is null.</remarks>
         public static void AddRange<T>(this IList<T> list, IEnumerable<T> items)
         {
-            ListIsNotNull(list, nameof(list));
-            ListIsNotNull(items, nameof(items));
+            list.ThrowIfNull(nameof(list));
+            items.ThrowIfNull(nameof(items));
             if (!items.Any())
                 return;
-            // ToList() is needed in case IEnumerable creates a new instance on iteration
             if (list is List<T> concreteList)
             {
                 concreteList.AddRange(items);
@@ -157,23 +141,20 @@ namespace Rhyous.Collections
             }
         }
 
-        /// <summary>
-        /// Provides and AddRange with an action.
-        /// </summary>
+        /// <summary>Provides and AddRange with an action.</summary>
         /// <typeparam name="T">The type of item in the list.</typeparam>
         /// <param name="list">The list.</param>
         /// <param name="items">The items to add.</param>
-        /// <param name="onAddAction">The action to run after the items are added.</param>
+        /// <param name="onAddAction">The action to run after each item is added. By default there is no action.</param>
         /// <remarks>The action is run n times, once for each item.</remarks>
-        /// <remarks>This doesn't throw an exception items is null.</remarks>
+        /// <remarks>This doesn't throw an exception if items is null.</remarks>
         public static void AddRange<T>(this IList<T> list, IEnumerable<T> items, Action<T> onAddAction)
         {
-            ListIsNotNull(list, nameof(list));
-            ListIsNotNull(items, nameof(items));
+            list.ThrowIfNull(nameof(list));
+            items.ThrowIfNull(nameof(items));
             if (!items.Any())
                 return;
-            var itemsList = items.ToList();
-            // ToList() is needed in case IEnumerable creates a new instance on iteration
+            var itemsList = items.ToList(); // So we only enumerate once
             if (list is List<T> concreteList)
             {
                 concreteList.AddRange(itemsList);
@@ -187,22 +168,20 @@ namespace Rhyous.Collections
             }
         }
 
-        /// <summary>
-        /// Provides and AddRange with an action.
-        /// </summary>
+        /// <summary>Provides an AddRange with an action.</summary>
         /// <typeparam name="T">The type of item in the list.</typeparam>
         /// <param name="list">The list.</param>
         /// <param name="items">The items to add.</param>
-        /// <param name="onAddAction">The action to run after the items are added.</param>
-        /// <remarks>The action is run one times, once for all items.</remarks>
+        /// <param name="onAddAction">The action to run after all items are added. By default there is no action.</param>
+        /// <remarks>The action is run one time, once for all items.</remarks>
+        /// <remarks>This doesn't throw an exception if items is null.</remarks>
         public static void AddRange<T>(this IList<T> list, IEnumerable<T> items, Action<IEnumerable<T>> onAddAction)
         {
-            ListIsNotNull(list, nameof(list));
-            ListIsNotNull(items, nameof(items));
+            list.ThrowIfNull(nameof(list));
+            items.ThrowIfNull(nameof(items));
             if (!items.Any())
                 return;
-            var itemsList = items.ToList();
-            // ToList() is needed in case IEnumerable creates a new instance on iteration
+            var itemsList = items.ToList(); // So we only enumerate once
             if (list is List<T> concreteList)
             {
                 concreteList.AddRange(itemsList);
@@ -218,9 +197,16 @@ namespace Rhyous.Collections
         #endregion
 
         #region SetIndex
+        /// <summary>Sets the item at a specific index to the provided item.</summary>
+        /// <typeparam name="T">The item type.</typeparam>
+        /// <param name="list">The list.</param>
+        /// <param name="index">The index of the item to set.</param>
+        /// <param name="item">The item.</param>
+        /// <param name="onAddAction">Optional. An action to run on the added item.</param>
+        /// <param name="onRemoveAction">Optional. An action to run on the removed item.</param>
         public static void SetIndex<T>(this IList<T> list, int index, T item, Action<T> onAddAction = null, Action<T> onRemoveAction = null)
         {
-            ListIsNotNull(list, nameof(list));
+            list.ThrowIfNull(nameof(list));
             var removedItem = list[index];
             list[index] = item;
             onAddAction?.Invoke(item);
@@ -229,17 +215,15 @@ namespace Rhyous.Collections
         #endregion
 
         #region InsertRange
-        /// <summary>
-        /// Adds insert range to IList.
-        /// </summary>
+        /// <summary>Adds insert range to IList.</summary>
         /// <typeparam name="T">The type of item in the list.</typeparam>
         /// <param name="list">The list.</param>
         /// <param name="index">The index.</param>
         /// <param name="items">The items to insert.</param>
         public static void InsertRange<T>(this IList<T> list, int index, IEnumerable<T> items)
         {
-            ListIsNotNull(list, nameof(list));
-            ListIsNotNull(items, nameof(items));
+            list.ThrowIfNull(nameof(list));
+            items.ThrowIfNull(nameof(items));
             if (!items.Any())
                 return;
             var itemsList = items.ToList();
@@ -254,9 +238,7 @@ namespace Rhyous.Collections
             }
         }
 
-        /// <summary>
-        /// Adds insert range to IList with an action after all are inserted.
-        /// </summary>
+        /// <summary>Adds insert range to IList with an action after all are inserted.</summary>
         /// <typeparam name="T">The type of item in the list.</typeparam>
         /// <param name="list">The list.</param>
         /// <param name="index">The index.</param>
@@ -265,8 +247,8 @@ namespace Rhyous.Collections
         /// <remarks>Runs the action one times, once for all added items.</remarks>
         public static void InsertRange<T>(this IList<T> list, int index, IEnumerable<T> items, Action<IEnumerable<T>> onInsertAction)
         {
-            ListIsNotNull(list, nameof(list));
-            ListIsNotNull(items, nameof(items));
+            list.ThrowIfNull(nameof(list));
+            items.ThrowIfNull(nameof(items));
             if (!items.Any())
                 return;
             var itemsList = items.ToList();
@@ -283,9 +265,7 @@ namespace Rhyous.Collections
             onInsertAction?.Invoke(itemsList);
         }
 
-        /// <summary>
-        /// Adds insert range to IList with an action after each is inserted.
-        /// </summary>
+        /// <summary>Adds insert range to IList with an action after each is inserted.</summary>
         /// <typeparam name="T">The type of item in the list.</typeparam>
         /// <param name="list">The list.</param>
         /// <param name="index">The index.</param>
@@ -294,8 +274,8 @@ namespace Rhyous.Collections
         /// <remarks>Runs the action n times, once for each added item.</remarks>
         public static void InsertRange<T>(this IList<T> list, int index, IEnumerable<T> items, Action<int, T> onInsertAction)
         {
-            ListIsNotNull(list, nameof(list));
-            ListIsNotNull(items, nameof(items));
+            list.ThrowIfNull(nameof(list));
+            items.ThrowIfNull(nameof(items));
             if (!items.Any())
                 return;
             var itemsList = items.ToList();
@@ -312,9 +292,15 @@ namespace Rhyous.Collections
         #endregion
 
         #region GetRange
+        /// <summary>Gets a range from an IList{T}. Unlike List{T}, IList{T} does not define GetRange{T}.</summary>
+        /// <typeparam name="T">The item type in the list.</typeparam>
+        /// <param name="list">The list.</param>
+        /// <param name="index">The index to start getting the range.</param>
+        /// <param name="count">The number of items to get.</param>
+        /// <returns>An IRangeableList{T} of items.</returns>
         public static IRangeableList<T> GetRange<T>(this IList<T> list, int index, int count)
         {
-            ListIsNotNull(list, nameof(list));
+            list.ThrowIfNull(nameof(list));
             var rangedList = new RangeableList<T>();
             for (int i = 0; i < count; i++)
             {
@@ -325,9 +311,15 @@ namespace Rhyous.Collections
         #endregion
 
         #region RemoveRange
+        /// <summary>Removes a range from an IList{T}. Unlike List{T}, IList{T} does not have define RemoveRange{T}.</summary>
+        /// <typeparam name="T">The item type in the list.</typeparam>
+        /// <param name="list">The list.</param>
+        /// <param name="index">The index to start getting the range.</param>
+        /// <param name="count">The number of items to get.</param>
+        /// <param name="onRemoveAction">Optional. An action to perform on each item removed from the list before it is removed.</param>
         public static void RemoveRange<T>(this IList<T> list, int index, int count, Action<T> onRemoveAction = null)
         {
-            ListIsNotNull(list, nameof(list));
+            list.ThrowIfNull(nameof(list));
             if (list is List<T> concreteList)
             {
                 var range = GetRange(list, index, count);
@@ -343,9 +335,15 @@ namespace Rhyous.Collections
             }
         }
 
+        /// <summary>Removes a range from an IList{T}. Unlike List{T}, IList{T} does not have define RemoveRange{T}.</summary>
+        /// <typeparam name="T">The item type in the list.</typeparam>
+        /// <param name="list">The list.</param>
+        /// <param name="index">The index to start getting the range.</param>
+        /// <param name="count">The number of items to get.</param>
+        /// <param name="onRemoveAction">Optional. A bulk action to perform on the range of items to remove from the list before they are removed.</param>
         public static void RemoveRange<T>(this IList<T> list, int index, int count, Action<IEnumerable<T>> onRemoveAction = null)
         {
-            ListIsNotNull(list, nameof(list));
+            list.ThrowIfNull(nameof(list));
             if (list is List<T> concreteList)
             {
                 var range = GetRange(list, index, count);
@@ -373,7 +371,7 @@ namespace Rhyous.Collections
         /// <returns>A rangeable list.</returns>
         public static RangeableList<T> ToRangeableList<T>(this IEnumerable<T> list)
         {
-            ListIsNotNull(list, nameof(list));
+            list.ThrowIfNull(nameof(list));
             return new RangeableList<T>(list);
         }
 
@@ -388,17 +386,11 @@ namespace Rhyous.Collections
         public static RangeableList<TCast> ToRangeableList<T, TCast>(this IEnumerable<T> list)
             where T : TCast
         {
-            ListIsNotNull(list, nameof(list));
+            list.ThrowIfNull(nameof(list));
             return new RangeableList<TCast>(list.Select(i => (TCast)i));
         }
         #endregion
 
-        internal static void ListIsNotNull<T>(IEnumerable<T> list, string argument)
-        {
-            if (list == null)
-                throw new ArgumentNullException(argument);
-        }
-        
         internal static void OnItemAction<T>(IEnumerable<T> items, Action<T> onItemAction)
         {
             if (onItemAction != null)

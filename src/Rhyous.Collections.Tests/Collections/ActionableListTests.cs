@@ -55,7 +55,7 @@ namespace Rhyous.Collections.Tests.Collections
             Action<int, TestClass> insertAction = null;
 
             // Act
-            var list = new ActionableList<TestClass>(addAction, removeAction, 10, insertAction);
+            var list = new ActionableList<TestClass>(addAction, removeAction, insertAction, 10);
 
             // Assert
             Assert.AreEqual(10, list.Capacity);
@@ -71,7 +71,7 @@ namespace Rhyous.Collections.Tests.Collections
             var items = new List<TestClass> { new TestClass { }, new TestClass { } };
 
             // Act
-            var list = new ActionableList<TestClass>(addAction, removeAction, items, insertAction);
+            var list = new ActionableList<TestClass>(items, addAction, removeAction, insertAction);
             list.InsertAction(1, new TestClass());
 
             // Assert
@@ -87,7 +87,7 @@ namespace Rhyous.Collections.Tests.Collections
             Action<TestClass> addAction = (i) => { };
             Action<TestClass> removeAction = (i) => { };
             Action<int, TestClass> insertAction = null;
-            var list = new ActionableList<TestClass>(addAction, removeAction, 10, insertAction);
+            var list = new ActionableList<TestClass>(addAction, removeAction, insertAction, 10);
 
             // Act
             list.Capacity = 20;
@@ -304,7 +304,7 @@ namespace Rhyous.Collections.Tests.Collections
         {
             // Arrange
             var tc = new TestClass();
-            var ActionableList = new ActionableList<TestClass>(null, null, new[] { tc });
+            var ActionableList = new ActionableList<TestClass>(new[] { tc }, null, null);
 
             // Act
             // Assert
@@ -316,7 +316,7 @@ namespace Rhyous.Collections.Tests.Collections
         {
             // Arrange
             var tc = new TestClass();
-            var actionableList = new ActionableList<TestClass>(null, null, new[] { tc });
+            var actionableList = new ActionableList<TestClass>(new[] { tc }, null, null);
             TestClass[] array = new TestClass[1];
 
             // Act

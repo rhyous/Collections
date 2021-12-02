@@ -2,8 +2,10 @@
 
 namespace Rhyous.Collections.Extensions
 {
+    /// <summary>Extension methods for Arrays.</summary>
     public static class ArrayExtensions
     {
+        /// <summary>Fills an array so that every item in the array has the same value.</summary>
         public static T[] Fill<T>(this T[] array, T value)
         {
             if (array is null) { throw new ArgumentNullException(nameof(array)); }
@@ -12,6 +14,7 @@ namespace Rhyous.Collections.Extensions
             return array;
         }
 
+        /// <summary>Fills a two dimensional array so that every item in the array has the same value.</summary>
         public static T[,] Fill<T>(this T[,] array, T value)
         {
             if (array is null) { throw new ArgumentNullException(nameof(array)); }
@@ -24,6 +27,7 @@ namespace Rhyous.Collections.Extensions
             return array;
         }
 
+        /// <summary>Fills a three dimensional array so that every item in the array has the same value.</summary>
         public static T[,,] Fill<T>(this T[,,] array, T value)
         {
             if (array is null) { throw new ArgumentNullException(nameof(array)); }
@@ -38,6 +42,8 @@ namespace Rhyous.Collections.Extensions
             return array;
         }
 
+
+        /// <summary>Fills a four dimensional array so that every item in the array has the same value.</summary>
         public static T[,,,] Fill<T>(this T[,,,] array, T value)
         {
             if (array is null) { throw new ArgumentNullException(nameof(array)); }
@@ -54,6 +60,7 @@ namespace Rhyous.Collections.Extensions
             return array;
         }
 
+        /// <summary>Fills a five dimensional array so that every item in the array has the same value.</summary>
         public static T[,,,,] Fill<T>(this T[,,,,] array, T value)
         {
             if (array is null) { throw new ArgumentNullException(nameof(array)); }

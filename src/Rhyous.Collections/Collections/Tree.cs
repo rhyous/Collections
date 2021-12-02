@@ -9,6 +9,7 @@
     public class Tree<T>
         where T : IParent<T>, IChildren<T, T>
     {
+        /// <summary>The root item of the tree.</summary>
         public T Root
         {
             get { return _Root; }

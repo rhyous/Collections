@@ -2,20 +2,21 @@
 
 namespace Rhyous.Collections
 {
-    /// <summary>
-    /// This is a wrapper around <see cref="List{T}"/> that uses the <see cref="IRangeableList{T}"/> interface.
-    /// </summary>
+    /// <summary>This is inherits <see cref="List{T}"/> but also implements the <see cref="IRangeableList{T}"/> interface.</summary>
     /// <typeparam name="T">The items in the list.</typeparam>
     public class RangeableList<T> : List<T>, IRangeableList<T>
     {
+        /// <inheritdoc />
         public RangeableList()
         {
         }
 
+        /// <inheritdoc />
         public RangeableList(int capacity) : base(capacity)
         {
         }
 
+        /// <inheritdoc />
         public RangeableList(IEnumerable<T> collection) : base(collection)
         {
         }

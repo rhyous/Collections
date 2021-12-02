@@ -1,4 +1,4 @@
-version: 1.0.{build}
+version: 1.2.{build}
 image: Visual Studio 2019
 dotnet_csproj:
   patch: true
@@ -6,6 +6,7 @@ dotnet_csproj:
   version: '{version}'
   version_prefix: '{version}'
   package_version: '{version}'
+  assembly_version: '{version}'
   file_version: '{version}'
   informational_version: '{version}'
 before_build:
@@ -19,10 +20,10 @@ test:
   categories:
     except:
     - slow
-artifacts:
-  - path: '**\*.nupkg'
 nuget:
   disable_publish_on_pr: true
+artifacts:
+  - path: '**\*.nupkg'
 deploy:
 - provider: NuGet
   on:

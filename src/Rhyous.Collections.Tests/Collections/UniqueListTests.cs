@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Rhyous.Collections.Tests.Dictionaries
+namespace Rhyous.Collections.Tests.Collections
 {
     [TestClass]
     public class UniqueListTests
@@ -70,6 +70,19 @@ namespace Rhyous.Collections.Tests.Dictionaries
         }
 
         [TestMethod]
+        public void SettingDuplicateViaIndexIsAllowedIfDifferent()
+        {
+            // Arrange
+            var list = new UniqueList<string> { "A", "B" };
+
+            // Act
+            list[0] = "C";
+
+            // Assert
+            Assert.AreEqual(2, list.Count);
+        }
+
+        [TestMethod]
         public void SettingDuplicateViaIndexIsAllowedIfSameAccordingToEqualityComparer()
         {
             // Arrange
@@ -86,6 +99,23 @@ namespace Rhyous.Collections.Tests.Dictionaries
             Assert.AreEqual(list[0].Name, item1dot1.Name);
         }
 
+        [TestMethod]
+        public void IsDuplicate_AccordingToEqualityComparer()
+        {
+            // Arrange
+            var item1 = new TestClass { Id = 1, Name = "1" };
+            var item1dot1 = new TestClass { Id = 1, Name = "1.1" };
+            var item2 = new TestClass { Id = 2, Name = "2" };
+            var comparer = new IdEqualityComparer();
+            var list = new UniqueList<TestClass>(new[] { item1, item2 }, comparer);
+
+            // Act
+            var actual = list.IsDuplicate(item1dot1);
+
+            // Assert
+            Assert.IsTrue(actual);
+        }
+
         interface IId { int Id { get; set; } }
         internal class TestClass : IId
         {
@@ -96,7 +126,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         {
             public bool Equals(IId x, IId y) => x.Id == y.Id;
 
-            public int GetHashCode(IId obj) => throw new System.NotImplementedException();
+            public int GetHashCode(IId obj) => obj.Id.GetHashCode();
         }
         #endregion
 

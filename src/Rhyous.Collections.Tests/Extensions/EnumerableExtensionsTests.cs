@@ -1,5 +1,6 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Rhyous.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,48 +9,84 @@ namespace Rhyous.Collections.Tests.Dictionaries
     [TestClass]
     public class EnumerableExtensionsTests
     {
+        #region Nth to 10
+
         [TestMethod]
-        public void NoneIEnumerableNullNoExpressionTests()
+        public void EnumerableExtensions_Nth_Tests()
         {
             // Arrange
-            IEnumerable<int> list = null;
+            var list = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
             // Act & Assert
+            int i = 0;
+            Assert.AreEqual(list[i++], list.First()); // Part of System.Linq
+            Assert.AreEqual(list[i++], list.Second());
+            Assert.AreEqual(list[i++], list.Third());
+            Assert.AreEqual(list[i++], list.Fourth());
+            Assert.AreEqual(list[i++], list.Fifth());
+            Assert.AreEqual(list[i++], list.Sixth());
+            Assert.AreEqual(list[i++], list.Seventh());
+            Assert.AreEqual(list[i++], list.Eighth());
+            Assert.AreEqual(list[i++], list.Ninth());
+            Assert.AreEqual(list[i++], list.Tenth());
+        }
+
+        [TestMethod]
+        public void EnumerableExtensions_Nth_Null_Tests()
+        {
+            // Arranage 
+            IEnumerable<int> list = null;
+            
+            // Act & Assert
+            Assert.ThrowsException<ArgumentNullException>(() => { list.First(); });
+            Assert.ThrowsException<ArgumentNullException>(() => { list.Second(); });
+            Assert.ThrowsException<ArgumentNullException>(() => { list.Third(); });
+            Assert.ThrowsException<ArgumentNullException>(() => { list.Fourth(); });
+            Assert.ThrowsException<ArgumentNullException>(() => { list.Fifth(); });
+            Assert.ThrowsException<ArgumentNullException>(() => { list.Sixth(); });
+            Assert.ThrowsException<ArgumentNullException>(() => { list.Seventh(); });
+            Assert.ThrowsException<ArgumentNullException>(() => { list.Eighth(); });
+            Assert.ThrowsException<ArgumentNullException>(() => { list.Ninth(); });
+            Assert.ThrowsException<ArgumentNullException>(() => { list.Tenth(); });
+        }
+
+        [TestMethod]
+        public void EnumerableExtensions_Nth_Empty_Tests()
+        {
+            // Arranage 
+            IEnumerable<int> list = new List<int>();
+
+            // Act & Assert
+            Assert.ThrowsException<InvalidOperationException>(() => { list.First(); });
+            Assert.ThrowsException<InvalidOperationException>(() => { list.Second(); });
+            Assert.ThrowsException<InvalidOperationException>(() => { list.Third(); });
+            Assert.ThrowsException<InvalidOperationException>(() => { list.Fourth(); });
+            Assert.ThrowsException<InvalidOperationException>(() => { list.Fifth(); });
+            Assert.ThrowsException<InvalidOperationException>(() => { list.Sixth(); });
+            Assert.ThrowsException<InvalidOperationException>(() => { list.Seventh(); });
+            Assert.ThrowsException<InvalidOperationException>(() => { list.Eighth(); });
+            Assert.ThrowsException<InvalidOperationException>(() => { list.Ninth(); });
+            Assert.ThrowsException<InvalidOperationException>(() => { list.Tenth(); });
+        }
+        #endregion
+
+        #region None
+        [TestMethod]
+        [ListTNullOrEmpty(typeof(int))]
+        public void EnumerableExtensions_None_IEnumerableNull_NoExpression_Test(List<int> list)
+        {
             Assert.IsTrue(list.None());
         }
 
         [TestMethod]
-        public void NoneIEnumerableEmptyNoExpressionTests()
+        [ListTNullOrEmpty(typeof(int))]
+        public void EnumerableExtensions_None_IEnumerableNull_WithExpression_Test(List<int> list)
         {
-            // Arrange
-            IEnumerable<int> list = new List<int>();
-
-            // Act & Assert
-            Assert.IsTrue(list.None());
-        }
-
-        [TestMethod]
-        public void NoneIEnumerableNullWithExpressionTests()
-        {
-            // Arrange
-            IEnumerable<int> list = null;
-
-            // Act & Assert
-            Assert.IsTrue(list.None(i=>i < 10));
-        }
-
-        [TestMethod]
-        public void NoneIEnumerableEmptyWithExpressionTests()
-        {
-            // Arrange
-            IEnumerable<int> list = new List<int>();
-
-            // Act & Assert
             Assert.IsTrue(list.None(i => i < 10));
         }
         
         [TestMethod]
-        public void NoneIEnumerableWithExpressionFalseTests()
+        public void EnumerableExtensions_None_IEnumerableWithExpressionFalseTests()
         {
             // Arrange
             IEnumerable<int> list = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -59,7 +96,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         }
 
         [TestMethod]
-        public void NoneIEnumerableWithExpressionTrueTests()
+        public void EnumerableExtensions_None_IEnumerableWithExpressionTrueTests()
         {
             // Arrange
             IEnumerable<int> list = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -67,13 +104,23 @@ namespace Rhyous.Collections.Tests.Dictionaries
             // Act & Assert
             Assert.IsTrue(list.None(i => i > 10));
         }
+        #endregion
+
+        #region None
+        [TestMethod]
+        [ListTNullOrEmpty(typeof(int))]
+        public void EnumerableExtensions_NUllOrEmpty_IEnumerableNull_Test(List<int> list)
+        {
+            Assert.IsTrue(list.NullOrEmpty());
+        }
+        #endregion
 
         #region UnorderedEquals tests
         /// <summary>
         /// Scenario 1 - Both null
         /// </summary>
         [TestMethod]
-        public void UnorderedEqualsBothNullTrueTest()
+        public void EnumerableExtensions_UnorderedEqualsBothNullTrueTest()
         {
             // Arrange
             IEnumerable<string> items1 = null;
@@ -88,7 +135,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 2a - Left list is null, right  is instantiated.
         /// </summary>
         [TestMethod]
-        public void UnorderedEqualsLeftNullFalseTest()
+        public void EnumerableExtensions_UnorderedEqualsLeftNullFalseTest()
         {
             // Arrange
             IEnumerable<string> items1 = null;
@@ -103,7 +150,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 2b - Right list is null, left is instantiated.
         /// </summary>
         [TestMethod]
-        public void UnorderedEqualsRightNullFalseTest()
+        public void EnumerableExtensions_UnorderedEqualsRightNullFalseTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C" };
@@ -118,7 +165,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 3 - Both lists are instantiated but empty
         /// </summary>
         [TestMethod]
-        public void UnorderedEqualsBothEmptyTrueTest()
+        public void EnumerableExtensions_UnorderedEqualsBothEmptyTrueTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string>();
@@ -133,7 +180,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 4a - Left list is empty, right list is populated.
         /// </summary>
         [TestMethod]
-        public void UnorderedEqualsLeftIsEmptyFalseTest()
+        public void EnumerableExtensions_UnorderedEqualsLeftIsEmptyFalseTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string>();
@@ -148,7 +195,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 4b - Right list is empty, left list is populated.
         /// </summary>
         [TestMethod]
-        public void UnorderedEqualsRightEmptyFalseTest()
+        public void EnumerableExtensions_UnorderedEqualsRightEmptyFalseTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C" };
@@ -163,7 +210,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenaro 5 - Both are instantiated but have different number of items.
         /// </summary>
         [TestMethod]
-        public void UnorderedEqualsSameDistinctItemsButNotSameFalseTest()
+        public void EnumerableExtensions_UnorderedEqualsSameDistinctItemsButNotSameFalseTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C" };
@@ -178,7 +225,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 6a - Lists same size and items are equal
         /// </summary>
         [TestMethod]
-        public void UnorderedEqualsTrueTest()
+        public void EnumerableExtensions_UnorderedEqualsTrueTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C" };
@@ -193,7 +240,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 6b - Lists same size but items are not equal
         /// </summary>
         [TestMethod]
-        public void UnorderedEqualsFalseTest()
+        public void EnumerableExtensions_UnorderedEqualsFalseTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C" };
@@ -208,7 +255,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 6c - Lists same size and items are equal and some items are null
         /// </summary>
         [TestMethod]
-        public void UnorderedEqualsNullItemsTrueTest()
+        public void EnumerableExtensions_UnorderedEqualsNullItemsTrueTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C", null, "E" };
@@ -223,7 +270,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 6d - Lists same size and items are equal and some items are duplicated
         /// </summary>
         [TestMethod]
-        public void UnorderedEqualsDuplicateItemsTrueTest()
+        public void EnumerableExtensions_UnorderedEqualsDuplicateItemsTrueTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C", "B" };
@@ -238,7 +285,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 6e - Lists same size and items are not equal, one side has more nulls and less items
         /// </summary>
         [TestMethod]
-        public void UnorderedEqualsDifferentNumberOfNullItemsFalseTest()
+        public void EnumerableExtensions_UnorderedEqualsDifferentNumberOfNullItemsFalseTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C", null, "E", "B" };
@@ -253,7 +300,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 7 - Lists same size and items are not strictly equal, but IEqualityComparer<T> makes them equal
         /// </summary>
         [TestMethod]
-        public void UnorderedEqualsIgnoreCaseTrueTest()
+        public void EnumerableExtensions_UnorderedEqualsIgnoreCaseTrueTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "a", "b", "C", "B" };
@@ -270,7 +317,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 1 - Both null
         /// </summary>
         [TestMethod]
-        public void GetMisMatchedItemsBothNullTest()
+        public void EnumerableExtensions_GetMisMatchedItemsBothNullTest()
         {
             // Arrange
             IEnumerable<string> items1 = null;
@@ -288,7 +335,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 2a - Left list is null, right  is instantiated.
         /// </summary>
         [TestMethod]
-        public void GetMisMatchedItemsLeftNullTest()
+        public void EnumerableExtensions_GetMisMatchedItemsLeftNullTest()
         {
             // Arrange
             IEnumerable<string> items1 = null;
@@ -307,7 +354,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 2b - Right list is null, left is instantiated.
         /// </summary>
         [TestMethod]
-        public void GetMisMatchedItemsRightNullTest()
+        public void EnumerableExtensions_GetMisMatchedItemsRightNullTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C" };
@@ -326,7 +373,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 3 - Both lists are instantiated but empty
         /// </summary>
         [TestMethod]
-        public void GetMisMatchedItemsBothEmptyTest()
+        public void EnumerableExtensions_GetMisMatchedItemsBothEmptyTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string>();
@@ -344,7 +391,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 4a - Left list is empty, right list is populated.
         /// </summary>
         [TestMethod]
-        public void GetMisMatchedItemsLeftIsEmptyTest()
+        public void EnumerableExtensions_GetMisMatchedItemsLeftIsEmptyTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string>();
@@ -363,7 +410,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 4b - Right list is empty, left list is populated.
         /// </summary>
         [TestMethod]
-        public void GetMisMatchedItemsRightIsEmptyTest()
+        public void EnumerableExtensions_GetMisMatchedItemsRightIsEmptyTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C" };
@@ -382,7 +429,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 5a - Lists same size and items are equal
         /// </summary>
         [TestMethod]
-        public void GetMisMatchedItemsAllMatchTest()
+        public void EnumerableExtensions_GetMisMatchedItemsAllMatchTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C" };
@@ -400,7 +447,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 5b - Lists same size but items are not equal
         /// </summary>
         [TestMethod]
-        public void GetMisMatchedItems1EachTest()
+        public void EnumerableExtensions_GetMisMatchedItems1EachTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C" };
@@ -420,7 +467,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 5c - Lists same size and items are equal and some items are null
         /// </summary>
         [TestMethod]
-        public void GetMisMatchedItemsNullItemsTest()
+        public void EnumerableExtensions_GetMisMatchedItemsNullItemsTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C", null, "E" };
@@ -438,7 +485,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 5d - Lists same size and items are equal and some items are duplicated
         /// </summary>
         [TestMethod]
-        public void GetMisMatchedItemsAllMatchDuplicateItemsTest()
+        public void EnumerableExtensions_GetMisMatchedItemsAllMatchDuplicateItemsTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C", "B" };
@@ -456,7 +503,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 5d - Lists same size and items are equal and some items are duplicated
         /// </summary>
         [TestMethod]
-        public void GetMisMatchedItemsAllMatchDuplicateItems_Right_Test()
+        public void EnumerableExtensions_GetMisMatchedItemsAllMatchDuplicateItems_Right_Test()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C", "B" };
@@ -474,7 +521,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 5d - Lists same size and items are equal and some items are duplicated
         /// </summary>
         [TestMethod]
-        public void GetMisMatchedItemsAllMatchDuplicateItems_Left_Test()
+        public void EnumerableExtensions_GetMisMatchedItemsAllMatchDuplicateItems_Left_Test()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C", "B" };
@@ -492,7 +539,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 5e - Lists same size and items are not equal, one side has more nulls and less items
         /// </summary>
         [TestMethod]
-        public void GetMisMatchedItemsDifferentNumberOfNullItemsTest()
+        public void EnumerableExtensions_GetMisMatchedItemsDifferentNumberOfNullItemsTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C", null, "E", "B" };
@@ -512,7 +559,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 6 - Lists same size and items are not strictly equal, but IEqualityComparer<T> makes them equal
         /// </summary>
         [TestMethod]
-        public void GetMisMatchedItemsAllMatchIgnoreCaseTest()
+        public void EnumerableExtensions_GetMisMatchedItemsAllMatchIgnoreCaseTest()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "a", "b", "C", "B" };
@@ -530,7 +577,7 @@ namespace Rhyous.Collections.Tests.Dictionaries
         /// Scenario 5e - Lists same size and items are not equal, one side has more nulls and less items
         /// </summary>
         [TestMethod]
-        public void GetMisMatchedItemsDifferentNumberOfNullItems_MoreNullsOnLeft_Test()
+        public void EnumerableExtensions_GetMisMatchedItemsDifferentNumberOfNullItems_MoreNullsOnLeft_Test()
         {
             // Arrange
             IEnumerable<string> items1 = new List<string> { "A", "B", "C", null, "E", "B" };

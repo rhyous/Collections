@@ -26,7 +26,7 @@ namespace Rhyous.Collections
         private int _budget;
         private volatile Tables _tables;
 
-        private static int DefaultConcurrencyLevel => PlatformHelper.ProcessorCount;
+        private static int DefaultConcurrencyLevel => ProcessorInfo.ProcessorCount;
 
         /// <summary>
         /// Gets the number of items contained in the <see
