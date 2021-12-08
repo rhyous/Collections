@@ -391,6 +391,47 @@ namespace Rhyous.Collections
         }
         #endregion
 
+        #region Shuffle
+        /// <summary>Shuffles the items in the list in place, so it is the same list object, but the items in the list appear at different indexes.</summary>
+        /// <typeparam name="T">The type of items in the list.</typeparam>
+        /// <param name="list">The list to shuffle.</param>
+        public static void Shuffle<T>(this IList<T> list)
+        {
+            Shuffle(list, _RandomNumberGenerator);
+        }
+
+        /// <summary>Shuffles the items in the list in place, so it is the same list object, but the items in the list appear at different indexes.</summary>
+        /// <typeparam name="T">The type of items in the list.</typeparam>
+        /// <param name="list">The list to shuffle.</param>
+        /// <param name="randomNumberGenerator">The random number generator.</param>
+        /// <remarks>This internal overload is used for unit tests.</remarks>
+        internal static void Shuffle<T>(this IList<T> list, IRandomNumberGenerator randomNumberGenerator)
+        {
+            int nextLastIndex = list.Count;
+            while (nextLastIndex > 1)
+            {
+                int randId = randomNumberGenerator.Next(nextLastIndex--);
+                T value = list[randId];
+                list[randId] = list[nextLastIndex];
+                list[nextLastIndex] = value;
+            }
+        } private static readonly IRandomNumberGenerator _RandomNumberGenerator = new RandomNumberGenerator(new Random());
+
+        internal interface IRandomNumberGenerator
+        {
+            int Next(int maxValue);
+        }
+        internal class RandomNumberGenerator : IRandomNumberGenerator
+        {
+            private readonly Random _Random;
+            public RandomNumberGenerator(Random random)
+            {
+                _Random = random;
+            }
+            public int Next(int maxValue) => _Random.Next(maxValue);
+        }
+        #endregion
+
         internal static void OnItemAction<T>(IEnumerable<T> items, Action<T> onItemAction)
         {
             if (onItemAction != null)

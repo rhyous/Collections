@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;
 using System.Linq;
+using Moq;
+using static Rhyous.Collections.ListExtensions;
 
 namespace Rhyous.Collections.Tests
 {
@@ -1225,6 +1227,91 @@ namespace Rhyous.Collections.Tests
         }
         #endregion
 
+        #region Shuffle
+        [TestMethod]
+        public void ListExtensions_Shuffle_3_NoChange_Test()
+        {
+            // Arrange
+            var list = new List<string> { "a", "b", "c" };
+
+            var mockRepository = new MockRepository(MockBehavior.Strict);
+            var mockRandomNumberGenerator = mockRepository.Create<IRandomNumberGenerator>();
+            mockRandomNumberGenerator.Setup(m => m.Next(3))
+                                     .Returns(2);
+            mockRandomNumberGenerator.Setup(m => m.Next(2))
+                                     .Returns(1);
+
+            // Act
+            list.Shuffle(mockRandomNumberGenerator.Object);
+
+            // Assert
+            Assert.AreEqual("a", list[0]);
+            Assert.AreEqual("b", list[1]);
+            Assert.AreEqual("c", list[2]);
+
+        }
+
+        [TestMethod]
+        public void ListExtensions_Shuffle_3_Reversed_Test()
+        {
+            // Arrange
+            var list = new List<string> { "a", "b", "c" };
+
+            var mockRepository = new MockRepository(MockBehavior.Strict);
+            var mockRandomNumberGenerator = mockRepository.Create<IRandomNumberGenerator>();
+            mockRandomNumberGenerator.Setup(m => m.Next(3))
+                                     .Returns(0);
+            mockRandomNumberGenerator.Setup(m => m.Next(2))
+                                     .Returns(1);
+
+            // Act
+            list.Shuffle(mockRandomNumberGenerator.Object);
+
+            // Assert
+            Assert.AreEqual("a", list[2]);
+            Assert.AreEqual("b", list[1]);
+            Assert.AreEqual("c", list[0]);
+        }
+
+        [TestMethod]
+        public void ListExtensions_Shuffle_3_Random_Test()
+        {
+            // Arrange
+            var list = new List<string> { "a", "b", "c" };
+
+            var mockRepository = new MockRepository(MockBehavior.Strict);
+            var mockRandomNumberGenerator = mockRepository.Create<IRandomNumberGenerator>();
+            mockRandomNumberGenerator.Setup(m => m.Next(3))
+                                     .Returns(1);
+            mockRandomNumberGenerator.Setup(m => m.Next(2))
+                                     .Returns(0);
+
+            // Act
+            list.Shuffle(mockRandomNumberGenerator.Object);
+
+            // Assert
+            Assert.AreEqual("a", list[1]);
+            Assert.AreEqual("b", list[2]);
+            Assert.AreEqual("c", list[0]);
+        }
+
+        [TestMethod]
+        public void ListExtensions_Shuffle_Int_Test()
+        {
+            // Arrange
+            var list = new List<int>(100);
+            for (int i = 0; i < 100; i++)
+                list.Add(i);
+            var originalCopy = list.ToList();
+
+            // Act
+            list.Shuffle();
+
+            // Assert
+            CollectionAssert.AreEquivalent(originalCopy, list);
+            CollectionAssert.AreNotEqual(originalCopy, list);
+        }
+        #endregion
     }
 }
 
