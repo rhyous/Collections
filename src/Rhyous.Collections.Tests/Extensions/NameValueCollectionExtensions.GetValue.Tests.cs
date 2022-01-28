@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Specialized;
 
-namespace Rhyous.Collections.Tests.Extensions
+namespace Rhyous.Collections.Tests
 {
     [TestClass]
     public partial class NameValueCollectionExtensionsTests
@@ -24,7 +24,7 @@ namespace Rhyous.Collections.Tests.Extensions
         public void GetValueCollectionEmptyTest()
         {
             // Arrange
-            NameValueCollection collection = null;
+            NameValueCollection collection = new NameValueCollection();
 
             // Act
             var actual = collection.Get(null, -1);
