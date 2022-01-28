@@ -12,7 +12,8 @@ namespace Rhyous.Collections
     public static class ListMaker
     {
         /// <summary>
-        /// Allows 
+        /// This method allows the caller to add items without directly using AddRange() which is void.
+        /// This returns List{T}, which allows for command chaining.
         /// </summary>
         /// <typeparam name="T">The type of the list.</typeparam>
         /// <param name="list">The original list.</param>
@@ -25,6 +26,7 @@ namespace Rhyous.Collections
         }
         /// <summary>
         /// This method allows the caller to add both a single item and a list of items to a list in one method.
+        /// This returns List{T}, which allows for command chaining.
         /// </summary>
         /// <typeparam name="T">The type of the list.</typeparam>
         /// <param name="list">The original list.</param>
@@ -39,6 +41,7 @@ namespace Rhyous.Collections
         }
         /// <summary>
         /// This method allows the caller to add two single items and a list of items to a list in one method.
+        /// This returns List{T}, which allows for command chaining.
         /// </summary>
         /// <typeparam name="T">The type of the list.</typeparam>
         /// <param name="list">The original list.</param>
@@ -54,6 +57,7 @@ namespace Rhyous.Collections
         }
         /// <summary>
         /// This method allows the caller to add three single items and a list of items to a list in one method.
+        /// This returns List{T}, which allows for command chaining.
         /// </summary>
         /// <typeparam name="T">The type of the list.</typeparam>
         /// <param name="list">The original list.</param>
@@ -70,6 +74,7 @@ namespace Rhyous.Collections
         }
         /// <summary>
         /// This method allows the caller to add four single items and a list of items to a list in one method.
+        /// This returns List{T}, which allows for command chaining.
         /// </summary>
         /// <typeparam name="T">The type of the list.</typeparam>
         /// <param name="list">The original list.</param>
@@ -87,6 +92,7 @@ namespace Rhyous.Collections
         }
         /// <summary>
         /// This method allows the caller to add five single items and a list of items to a list in one method.
+        /// This returns List{T}, which allows for command chaining.
         /// </summary>
         /// <typeparam name="T">The type of the list.</typeparam>
         /// <param name="list">The original list.</param>
