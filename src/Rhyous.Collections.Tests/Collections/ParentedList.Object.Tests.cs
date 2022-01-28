@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
-namespace Rhyous.Collections.Tests.Collections
+namespace Rhyous.Collections.Tests
 {
     [TestClass]
     public class ParentedListObjectTests

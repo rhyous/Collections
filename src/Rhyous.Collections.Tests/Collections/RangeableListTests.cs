@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Rhyous.Collections.Shared.Tests.Collections
+namespace Rhyous.Collections.Tests
 {
     [TestClass]
     public class RangeableListTests

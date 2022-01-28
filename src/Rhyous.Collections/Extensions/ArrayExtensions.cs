@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Rhyous.Collections.Extensions
+namespace Rhyous.Collections
 {
     /// <summary>Extension methods for Arrays.</summary>
     public static class ArrayExtensions

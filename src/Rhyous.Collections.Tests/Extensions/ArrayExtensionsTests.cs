@@ -1,8 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Rhyous.Collections.Extensions;
 using System;
 
-namespace Rhyous.Collections.Tests.Extensions
+namespace Rhyous.Collections.Tests
 {
     [TestClass]
     public class ArrayExtensionsTests

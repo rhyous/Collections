@@ -1,10 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Rhyous.Collections.Extensions;
 using System;
 using System.Collections.Generic;
 
-namespace Rhyous.Collections.Tests.Extensions
+namespace Rhyous.Collections.Tests
 {
     [TestClass]
     public class CollectionExtensionsTests

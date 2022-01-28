@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Rhyous.Collections.Shared.Tests.Models
+namespace Rhyous.Collections.Tests
 {
     [TestClass]
     public class MismatchedItemsTests

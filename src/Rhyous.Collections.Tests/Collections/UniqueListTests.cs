@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Rhyous.Collections.Tests.Collections
+namespace Rhyous.Collections.Tests
 {
     [TestClass]
     public class UniqueListTests

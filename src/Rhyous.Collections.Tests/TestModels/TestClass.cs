@@ -1,4 +1,4 @@
-﻿namespace Rhyous.Collections.Tests.Collections
+﻿namespace Rhyous.Collections.Tests
 {
     class TestClass : ITreeable<TestClass>
     {
