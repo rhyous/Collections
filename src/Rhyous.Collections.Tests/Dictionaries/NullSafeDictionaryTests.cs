@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Rhyous.Collections.Tests.Dictionaries
+namespace Rhyous.Collections.Tests
 {
     [TestClass]
     public class NullSafeDictionaryTests

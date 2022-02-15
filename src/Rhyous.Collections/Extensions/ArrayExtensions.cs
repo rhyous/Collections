@@ -1,10 +1,48 @@
 ﻿using System;
+using System.Linq;
 
-namespace Rhyous.Collections.Extensions
+namespace Rhyous.Collections
 {
     /// <summary>Extension methods for Arrays.</summary>
     public static class ArrayExtensions
     {
+        #region ToJson
+        /// <summary>Converts a primitive array to Json. This does not serialize complex classes.</summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="array"></param>
+        /// <returns>The array in json format.</returns>
+        public static string ToJson<T>(this T[] array)
+        // where T : INumber<T> -- Future
+        {
+            if (!typeof(T).IsPrimitive)
+                throw new ArgumentException("The type of T must be a primitive.");
+            if (array == null || array.Length == 0)
+                return "[]";
+            return $"[{string.Join(",", array.Select(b => b is string ? $"'b'" : b.ToString()))}]";
+        }
+
+        /// <summary>Converts a primitive array to Json. This does not serialize complex classes.</summary>
+        /// <param name="array">A string array.</param>
+        /// <returns>The string array in json format.</returns>
+        public static string ToJson(this string[] array)
+        {
+            if (array == null || array.Length == 0)
+                return "[]";
+            return $"[{string.Join(",", array.Select(b => $"'{b}'"))}]";
+        }
+
+        /// <summary>Converts a primitive array to Json. This does not serialize complex classes.</summary>
+        /// <param name="array">A Guid array</param>
+        /// <returns>The Guid array in json format.</returns>
+        public static string ToJson(this Guid[] array)
+        {
+            if (array == null || array.Length == 0)
+                return "[]";
+            return $"[{string.Join(",", array.Select(b => $"'{b}'"))}]";
+        }
+        #endregion
+
+        #region Fill
         /// <summary>Fills an array so that every item in the array has the same value.</summary>
         public static T[] Fill<T>(this T[] array, T value)
         {
@@ -78,5 +116,6 @@ namespace Rhyous.Collections.Extensions
                                     array[j, k, l, m, n] = value;
             return array;
         }
+        #endregion
     }
 }

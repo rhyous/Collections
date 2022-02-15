@@ -103,5 +103,22 @@
             }
             return sbQuery.ToString();
         }
+
+        /// <summary>Appends a value to a NameValueCollection key, using a comma as a separator.</summary>
+        /// <param name="collection">The NameValueCollection</param>
+        /// <param name="key">The key.</param>
+        /// <param name="append">The value to append.</param>
+        /// <remarks>Null and empty strings are not considered values and will not be included in AppdendToValue.
+        /// However, whitespace is considered valid.</remarks>
+        public static void AppendToValue(this NameValueCollection collection, string key, string append)
+        {
+            if (collection is null) { throw new ArgumentNullException(nameof(collection)); }
+            if (string.IsNullOrEmpty(key)) { throw new ArgumentException("message", nameof(key)); }
+            if (string.IsNullOrEmpty(append)) { return; }
+
+            var currentValue = collection.Get(key, "");
+            currentValue = string.IsNullOrEmpty(currentValue) ? append : $"{currentValue},{append}";
+            collection.Set(key, currentValue);
+        }
     }
 }
