@@ -10,7 +10,7 @@ namespace Rhyous.Collections
     /// <remarks>As Microsoft did not give ConcurrentDictionary an interface, this does, but ConcurrentDictionary doesn't implement it; instead,
     /// use ConcurrentDictionaryWrapper.
     /// </remarks>
-    public interface IConcurrentDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ICollection<KeyValuePair<TKey, TValue>>, IEnumerable<KeyValuePair<TKey, TValue>>, IEnumerable, IDictionary, ICollection, IReadOnlyDictionary<TKey, TValue>, IReadOnlyCollection<KeyValuePair<TKey, TValue>>
+    public interface IConcurrentDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
         #region Concurrent Dictionary
         /// <inheritdoc/>
