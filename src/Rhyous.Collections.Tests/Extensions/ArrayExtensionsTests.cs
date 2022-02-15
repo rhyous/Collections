@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Rhyous.UnitTesting;
 using System;
 
 namespace Rhyous.Collections.Tests
@@ -6,6 +7,95 @@ namespace Rhyous.Collections.Tests
     [TestClass]
     public class ArrayExtensionsTests
     {
+        #region ToJson
+        [TestMethod]
+        public void ArrayExtensions_ToJson_T_NotPrimitive_Test()
+        {
+            // Arrange
+            var array = new object[0];
+
+            // Act & Assert
+            Assert.ThrowsException<ArgumentException>(() =>
+            {
+                array.ToJson();
+            });
+        }
+
+        [TestMethod]
+        [ArrayNullOrEmpty(typeof(int))]
+        public void ArrayExtensions_ToJson_T_Int_Primitive_NullOrEmpty_Test(int[] array)
+        {
+            // Arrange
+            // Act
+            var actual = array.ToJson();
+
+            // Assert
+            Assert.AreEqual("[]", actual);
+        }
+
+        [TestMethod]
+        public void ArrayExtensions_ToJson_T_Int_Primitive_Populated_Test()
+        {
+            // Arrange
+            var array = new int[] { 1, 2, 3, 4, 5 }; 
+            // Act
+            var actual = array.ToJson();
+
+            // Assert
+            Assert.AreEqual("[1,2,3,4,5]", actual);
+        }
+
+        [TestMethod]
+        [ArrayNullOrEmpty(typeof(string))]
+        public void ArrayExtensions_ToJson_String_NullOrEmpty_Test(string[] array)
+        {
+            // Arrange
+            // Act
+            var actual = array.ToJson();
+
+            // Assert
+            Assert.AreEqual("[]", actual);
+        }
+
+        [TestMethod]
+        public void ArrayExtensions_ToJson_String_Primitive_Populated_Test()
+        {
+            // Arrange
+            var array = new string[] { "1", "2", "3", "4", "5", "ABC" };
+            // Act
+            var actual = array.ToJson();
+
+            // Assert
+            Assert.AreEqual("['1','2','3','4','5','ABC']", actual);
+        }
+
+        [TestMethod]
+        [ArrayNullOrEmpty(typeof(Guid))]
+        public void ArrayExtensions_ToJson_Guid_NullOrEmpty_Test(Guid[] array)
+        {
+            // Arrange
+            // Act
+            var actual = array.ToJson();
+
+            // Assert
+            Assert.AreEqual("[]", actual);
+        }
+
+        [TestMethod]
+        public void ArrayExtensions_ToJson_Guid_Primitive_Populated_Test()
+        {
+            // Arrange
+            var guid1 = Guid.NewGuid();
+            var guid2 = Guid.NewGuid();
+            var array = new Guid[] {guid1, guid2 };
+            // Act
+            var actual = array.ToJson();
+
+            // Assert
+            Assert.AreEqual($"['{guid1}','{guid2}']", actual);
+        }
+        #endregion
+
         #region Fill 1
         [TestMethod]
         public void ArrayExtensions_Fill_1_InvalidInput_Test()
