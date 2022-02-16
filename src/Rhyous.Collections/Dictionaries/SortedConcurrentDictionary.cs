@@ -21,7 +21,7 @@ namespace Rhyous.Collections
         public bool IsEmpty => _CDict.IsEmpty;
 
         /// <inheritdoc/>
-        public ICollection<TKey> Keys => _CDict.Keys;
+        public ICollection<TKey> Keys => _CDict.Keys.OrderBy(k => k).ToList();
 
         /// <inheritdoc/>
         public ICollection<TValue> Values => _CDict.Values;

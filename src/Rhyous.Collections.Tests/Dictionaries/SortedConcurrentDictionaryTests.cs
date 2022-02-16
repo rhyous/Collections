@@ -36,10 +36,10 @@ namespace Rhyous.Collections.Tests.Dictionaries
         }
 
         [TestMethod]
-        public void SortedConcurrentDictionary_IsSorted_ToList_ExactlyBackwards_Test()
+        public void SortedConcurrentDictionary_Keys_IsSorted_Test()
         {
             // Arrange
-            var dictionary = new SortedConcurrentDictionary<string,int>();
+            var dictionary = new SortedConcurrentDictionary<string, int>();
             dictionary.Add("a", 1);
             dictionary.Add("b", 2);
             dictionary.Add("c", 3);
@@ -47,14 +47,14 @@ namespace Rhyous.Collections.Tests.Dictionaries
             dictionary.Add("e", 5);
 
             // Act
-            var list = dictionary.ToList<KeyValuePair<string, int>>();
+            var list = dictionary.Keys.ToList();
 
             // Assert
-            Assert.AreEqual(list[4].Key, "a");
-            Assert.AreEqual(list[3].Key, "b");
-            Assert.AreEqual(list[2].Key, "c");
-            Assert.AreEqual(list[1].Key, "d");
-            Assert.AreEqual(list[0].Key, "e");
+            Assert.AreEqual(list[0], "a");
+            Assert.AreEqual(list[1], "b");
+            Assert.AreEqual(list[2], "c");
+            Assert.AreEqual(list[3], "d");
+            Assert.AreEqual(list[4], "e");
         }
     }
 }
