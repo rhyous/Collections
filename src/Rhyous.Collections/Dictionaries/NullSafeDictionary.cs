@@ -9,7 +9,7 @@ namespace Rhyous.Collections
     /// then instead of an exception, Activate.CreateInstance() is returned.
     /// If you need to instantiate the object differently, inherit this class and override the DefaultValueProvider method.
     /// </summary>
-    public class NullSafeDictionary<TKey, TValue> : IDictionaryDefaultValueProvider<TKey, TValue>
+    public class NullSafeDictionary<TKey, TValue> : IDictionaryDefaultValueProvider<TKey, TValue>, IClearable, ICountable
     {
         internal IDictionary<TKey, TValue> _Dictionary = new Dictionary<TKey, TValue>();
 

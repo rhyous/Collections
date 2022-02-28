@@ -8,7 +8,7 @@ namespace Rhyous.Collections
     /// A list that automatically sets the parent when an item is added.
     /// </summary>
     /// <typeparam name="TItem">The type of item the list holds.</typeparam>
-    public class ActionableList<TItem> : IRangeableList<TItem>
+    public class ActionableList<TItem> : IRangeableList<TItem>, IClearable, ICountable
     {
 
         /// <summary>The underlying list, making it easier to implement IRangeableList{TItem} by wrapping it.</summary>

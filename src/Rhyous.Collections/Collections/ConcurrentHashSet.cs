@@ -15,7 +15,7 @@ namespace Rhyous.Collections
     /// concurrently from multiple threads.
     /// </remarks>
     [DebuggerDisplay("Count = {Count}")]
-    public class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T>
+    public class ConcurrentHashSet<T> : IReadOnlyCollection<T>, ICollection<T>, ICountable, IClearable
     {
         private const int DefaultCapacity = 31;
         private const int MaxLockNumber = 1024;

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Rhyous.Collections
 {
     /// <summary>This is inherits <see cref="List{T}"/> but also implements the <see cref="IRangeableList{T}"/> interface.</summary>
     /// <typeparam name="T">The items in the list.</typeparam>
-    public class RangeableList<T> : List<T>, IRangeableList<T>
+    public class RangeableList<T> : List<T>, IRangeableList<T>, IClearable, ICountable
     {
         /// <inheritdoc />
         public RangeableList()

@@ -12,7 +12,7 @@ namespace Rhyous.Collections
     /// <remarks>For items that are not reference equals but should be equals, an Equality comparer can be set.</remarks>
     /// <remarks>Also, this is different than a List{T} in that all items must be unique, but internally, it wraps a list.</remarks>
     /// <remarks>Also, this is different than a HashSet{T} as items in a HashSet{T} cannot be indexed, but internally, it uses a HashSet{T}.</remarks>
-    public class UniqueList<T> : IList<T>, IRangeableList<T>
+    public class UniqueList<T> : IList<T>, IRangeableList<T>, IClearable, ICountable
     {
         #region Constructors
 

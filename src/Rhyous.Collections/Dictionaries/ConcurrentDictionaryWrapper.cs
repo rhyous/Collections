@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Rhyous.Collections
 {
     /// <inheritdoc/>
-    public class ConcurrentDictionaryWrapper<TKey, TValue> : ConcurrentDictionary<TKey, TValue>, IConcurrentDictionary<TKey, TValue>
+    public class ConcurrentDictionaryWrapper<TKey, TValue> : ConcurrentDictionary<TKey, TValue>, IConcurrentDictionary<TKey, TValue>, IClearable, ICountable
     {
         #region Constructors
         /// <inheritdoc/>

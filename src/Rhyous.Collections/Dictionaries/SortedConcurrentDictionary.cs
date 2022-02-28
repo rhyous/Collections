@@ -10,7 +10,7 @@ namespace Rhyous.Collections
     /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
     /// <remarks>All it does is call OrderBy in the implementation of Enumerable.</remarks>
-    public class SortedConcurrentDictionary<TKey, TValue> : IConcurrentDictionary<TKey, TValue>
+    public class SortedConcurrentDictionary<TKey, TValue> : IConcurrentDictionary<TKey, TValue>, IClearable, ICountable
     {
         private readonly IConcurrentDictionary<TKey, TValue> _CDict = new ConcurrentDictionaryWrapper<TKey, TValue>();
 

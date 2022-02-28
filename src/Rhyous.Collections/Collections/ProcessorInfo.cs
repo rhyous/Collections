@@ -2,6 +2,7 @@
 
 namespace Rhyous.Collections
 {
+    /// <summary>Used by ConcurrentHashSet.</summary>
     internal static class ProcessorInfo
     {
         private const int ProcessorCountRefreshIntervalMs = 30000;

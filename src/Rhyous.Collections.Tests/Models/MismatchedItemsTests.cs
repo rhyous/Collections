@@ -24,7 +24,7 @@ namespace Rhyous.Collections.Tests
             // Arrange
             var mi = new MismatchedItems<int>();
             var original = mi.Right;
-            var newList = new List<int>();
+            var newList = new RangeableList<int>();
 
             // Act
             mi.Right = newList;
@@ -51,7 +51,7 @@ namespace Rhyous.Collections.Tests
             // Arrange
             var mi = new MismatchedItems<int>();
             var original = mi.Left;
-            var newList = new List<int>();
+            var newList = new RangeableList<int>();
 
             // Act
             mi.Left = newList;

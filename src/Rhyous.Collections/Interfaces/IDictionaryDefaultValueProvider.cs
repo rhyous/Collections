@@ -3,7 +3,7 @@
 namespace Rhyous.Collections
 {
     /// <summary>The interface for a dictionary that returns a default value when a key does not exist.</summary>
-    public interface IDictionaryDefaultValueProvider<TKey, TValue> : IDictionary<TKey, TValue>
+    public interface IDictionaryDefaultValueProvider<TKey, TValue> : IDictionary<TKey, TValue>, IClearable, ICountable
     {
         /// <summary> This method is used to provide a value when the Key is not found in the dictionary.  </summary>
         /// <param name="key">The key to find.</param>

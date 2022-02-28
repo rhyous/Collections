@@ -5,7 +5,7 @@ namespace Rhyous.Collections
     /// <summary>A list of INameValuePair{T} items.</summary>
     /// <typeparam name="T">The value type.</typeparam>
     /// <remarks>This is useful over a dictionary when the name is not a key, meaning the list must be able to contain duplicates.</remarks>
-    public class NameValuePairList<T> : List<INameValuePair<T>>
+    public class NameValuePairList<T> : List<INameValuePair<T>>, IClearable, ICountable
     {
         /// <inheritdoc />
         public NameValuePairList() { }
