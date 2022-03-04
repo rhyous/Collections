@@ -90,7 +90,70 @@ namespace Rhyous.Collections.Tests
         }
         #endregion
 
-        #region AddIfNewAndNotNull
+        #region TryAddIfNewAndNotNull
+        [TestMethod]
+        public void DictionaryExtensions_TryAddIfNewAndNotNull_NullDictionary_Test()
+        {
+            // Arrange
+            ConcurrentDictionaryWrapper<int, string> dictionary = null;
+
+            // Act
+            var actual = dictionary.TryAddIfNotNull(27, "value27"); // Does nothing
+
+            // Assert
+            Assert.IsFalse(actual);
+            Assert.IsNull(dictionary);
+        }
+
+        [TestMethod]
+        public void DictionaryExtensions_TryAddIfNewAndNotNull_New_Null_Test()
+        {
+            // Arrange
+            var dictionary = new ConcurrentDictionaryWrapper<int, string>();
+
+            // Act
+            var actual = dictionary.TryAddIfNotNull(27, null); // not added
+
+            // Assert
+            Assert.IsFalse(actual);
+            Assert.AreEqual(0, dictionary.Count);
+        }
+
+        [TestMethod]
+        public void DictionaryExtensions_TryAddIfNewAndNotNull_New_Test()
+        {
+            // Arrange
+            var dictionary = new ConcurrentDictionaryWrapper<int, string>();
+
+            // Act
+            var actual = dictionary.TryAddIfNotNull(27, "value27");
+
+            // Assert
+            Assert.IsTrue(actual);
+            Assert.AreEqual(1, dictionary.Count);
+            Assert.AreEqual(27, dictionary.Keys.First());
+            Assert.AreEqual("value27", dictionary[27]);
+        }
+
+        [TestMethod]
+        public void DictionaryExtensions_TryAddIfNewAndNotNull_NotNew_Test()
+        {
+            // Arrange
+            var dictionary = new ConcurrentDictionaryWrapper<int, string>();
+            dictionary.TryAdd(27, "pre-value27");
+
+            // Act
+            var actual = dictionary.TryAddIfNotNull(27, "value27");
+
+            // Assert
+            Assert.IsFalse(actual);
+            Assert.AreEqual(1, dictionary.Count);
+            Assert.AreEqual(27, dictionary.Keys.First());
+            Assert.AreEqual("pre-value27", dictionary[27]);
+        }
+        #endregion
+
+        #region TryAddIfNewAndNotNull
         [TestMethod]
         public void DictionaryExtensions_AddIfNewAndNotNull_NullDictionary_Test()
         {
@@ -147,6 +210,7 @@ namespace Rhyous.Collections.Tests
             Assert.AreEqual("pre-value27", dictionary[27]);
         }
         #endregion
+
 
         #region AddOrReplace
         [TestMethod]

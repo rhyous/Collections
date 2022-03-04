@@ -69,7 +69,7 @@ namespace Rhyous.Collections
         /// </summary>
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <typeparam name="TValue">The type of the value.</typeparam>
-        /// <param name="dictionary">The dictionary.</param>
+        /// <param name="dictionary">The instance of an IDictionary</param>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         public static void AddIfNewAndNotNull<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
@@ -77,6 +77,23 @@ namespace Rhyous.Collections
             if (dictionary == null || value == null || dictionary.TryGetValue(key, out _))
                 return;
             dictionary.Add(key, value);
+        }
+
+        /// <summary>
+        /// Adds a value only if the key doesn't already exist.
+        /// This prevents adding a null value.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the key.</typeparam>
+        /// <typeparam name="TValue">The type of the value.</typeparam>
+        /// <param name="dictionary">The instance of an IConcurrentDictionary.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>True if added to the dictionary, false otherwise</returns>
+        public static bool TryAddIfNotNull<TKey, TValue>(this IConcurrentDictionary<TKey, TValue> dictionary, TKey key, TValue value)
+        {
+            if (dictionary == null || value == null)
+                return false;
+            return dictionary.TryAdd(key, value);
         }
 
         /// <summary>
