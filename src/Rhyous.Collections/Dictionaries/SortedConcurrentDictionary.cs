@@ -13,6 +13,18 @@ namespace Rhyous.Collections
     public class SortedConcurrentDictionary<TKey, TValue> : IConcurrentDictionary<TKey, TValue>, IClearable, ICountable
     {
         private readonly IConcurrentDictionary<TKey, TValue> _CDict = new ConcurrentDictionaryWrapper<TKey, TValue>();
+        private readonly IComparer<TKey> _Comparer;
+
+        /// <summary>The default constructor</summary>
+        public SortedConcurrentDictionary()
+        {
+        }
+
+        /// <summary>The default constructor</summary>
+        public SortedConcurrentDictionary(IComparer<TKey> comparer)
+        {
+            _Comparer = comparer;
+        }
 
         /// <inheritdoc/>
         public TValue this[TKey key] { get => _CDict[key]; set => _CDict[key] = value; }
@@ -21,7 +33,7 @@ namespace Rhyous.Collections
         public bool IsEmpty => _CDict.IsEmpty;
 
         /// <inheritdoc/>
-        public ICollection<TKey> Keys => _CDict.Keys.OrderBy(k => k).ToList();
+        public ICollection<TKey> Keys => _CDict.Keys.OrderBy(k => k, _Comparer).ToList();
 
         /// <inheritdoc/>
         public ICollection<TValue> Values => _CDict.Values;
@@ -86,8 +98,13 @@ namespace Rhyous.Collections
         public bool TryUpdate(TKey key, TValue newValue, TValue comparisonValue) => _CDict.TryUpdate(key, newValue, comparisonValue);
 
         /// <inheritdoc/>
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => _CDict.OrderBy(kvp => kvp.Key).GetEnumerator();
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => _CDict.OrderBy(kvp => kvp.Key, _Comparer).GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        /// <summary>Converts this dictionary to a list.</summary>
+        /// <returns>List{KeyValuePair{TKey, TValue}}</returns>
+        public List<KeyValuePair<TKey, TValue>> ToList() 
+            => new List<KeyValuePair<TKey, TValue>>(_CDict.OrderBy(kvp => kvp.Key, _Comparer));
     }
 }
