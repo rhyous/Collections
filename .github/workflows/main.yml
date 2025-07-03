@@ -23,8 +23,8 @@ on:
   workflow_dispatch:
   
 env:
-  VERSION_PREFIX: '1.0' # The version prefix. Use SemVer to know when to change this.
-  VERSION_OFFSET: 14 # Add this to the version number to get the version number.
+  VERSION_PREFIX: '1.2' # The version prefix. Use SemVer to know when to change this.
+  VERSION_OFFSET: 12 # Add this to the version number to get the version number.
   COMMIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
   dotnet-version: '9.0.x'
   
@@ -54,7 +54,7 @@ jobs:
       run: |
         echo "VERSION=$VERSION_PREFIX" >> $GITHUB_OUTPUT
         echo "SHORT_COMMIT_HASH=$(git rev-parse --short $COMMIT_HASH)" >> $GITHUB_OUTPUT
-        echo "THIRD=$(($VERSION_OFFSET + $GITHUB_RUN_NUMBER))" >> $GITHUB_OUTPUT"
+        echo "THIRD=$(($VERSION_OFFSET + $GITHUB_RUN_NUMBER))" >> $GITHUB_OUTPUT
 
   # This workflow contains a single job called "build"
   build:
