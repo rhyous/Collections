@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Rhyous.Collections
 {
@@ -129,6 +130,67 @@ namespace Rhyous.Collections
             return dictionary.TryGetValue(key, out TValue value) || defaultValueProvider == null
                 ? value
                 : defaultValueProvider.Invoke(key);
+        }
+
+        /// <summary>Gets the value or if the value doesn't exist, provides a default value using the method provided.</summary>
+        /// <typeparam name="TKey">The type of the key.</typeparam>
+        /// <typeparam name="TValue">The type of the value.</typeparam>
+        /// <param name="dictionary">The dictionary.</param>
+        /// <param name="key">The key to get the value for.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>If the key is found, the value assigned to that key is returned. Otherwise, the defaultValueProvider method returns the value. If the defaultValueProvider is null, then you will get default(TValue).</returns>
+        public static TValue GetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue defaultValue)
+        {
+            if (dictionary == null)
+                throw new ArgumentNullException(nameof(dictionary));
+            return dictionary.TryGetValue(key, out TValue value)
+                ? value
+                : defaultValue;
+        }
+
+        /// <summary>Gets the first value or if the value doesn't exist, provides a default value using the method provided.</summary>
+        /// <typeparam name="TKey">The type of the key.</typeparam>
+        /// <typeparam name="TValue">The type of the value.</typeparam>
+        /// <param name="kvps">The key value pairs.</param>
+        /// <param name="key">The key to get the value for.</param>
+        /// <param name="defaultValueProvider">Optional. The method to provide the default value.</param>
+        /// <returns>If the key is found, the value assigned to that key is returned. Otherwise, the defaultValueProvider method returns the value. If the defaultValueProvider is null, then you will get default(TValue).</returns>
+        public static TValue GetValueOrDefault<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> kvps, TKey key, Func<TKey, TValue> defaultValueProvider = null)
+        {
+            if (kvps == null)
+                throw new ArgumentNullException(nameof(kvps));
+            var foundKvps = kvps.Where(kvp => EqualityComparer<TKey>.Default.Equals(kvp.Key, key)).ToList();
+            if (foundKvps.Count == 0)
+            {
+                return (defaultValueProvider == null)
+                     ? default
+                     : defaultValueProvider.Invoke(key);
+            }
+            var value = foundKvps[0].Value;
+            if (value == null)
+            {
+                return (defaultValueProvider == null)
+                     ? default
+                     : defaultValueProvider.Invoke(key);
+            }
+            return value;
+        }
+
+        /// <summary>Gets the first value or if the value doesn't exist, provides a default value using the method provided.</summary>
+        /// <typeparam name="TKey">The type of the key.</typeparam>
+        /// <typeparam name="TValue">The type of the value.</typeparam>
+        /// <param name="kvps">The key value pairs.</param>
+        /// <param name="key">The key to get the value for.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>If the key is found, the value assigned to that key is returned. Otherwise, the defaultValueProvider method returns the value. If the defaultValueProvider is null, then you will get default(TValue).</returns>
+        public static TValue GetValueOrDefault<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> kvps, TKey key, TValue defaultValue)
+        {
+            if (kvps == null)
+                throw new ArgumentNullException(nameof(kvps));
+            var foundKvps = kvps.Where(kvp => EqualityComparer<TKey>.Default.Equals(kvp.Key, key)).ToList();
+            return foundKvps.Count == 0 || foundKvps[0].Value == null
+                 ? defaultValue
+                 : foundKvps[0].Value;
         }
     }
 }
