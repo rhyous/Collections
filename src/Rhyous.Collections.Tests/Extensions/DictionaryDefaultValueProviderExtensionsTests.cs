@@ -88,7 +88,7 @@ namespace Rhyous.Collections.Tests
             {
                 enumerable.GetValueOrDefault(27, defaultValue);
             });
-            Assert.AreEqual($"Value cannot be null.{Environment.NewLine}Parameter name: kvps", ex.Message);
+            Assert.AreEqual($"Value cannot be null. (Parameter 'kvps')", ex.Message);
         }
 
         [TestMethod]
