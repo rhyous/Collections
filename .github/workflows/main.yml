@@ -4,9 +4,9 @@ name: CI - Main
  
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push events to the "master" branches
+  # Triggers the workflow on push events to the "main" branches
   push:
-    branches: [ "master"]
+    branches: [ "main"]
     paths-ignore:
       - '**.md'
       - '**.yml'
@@ -43,7 +43,7 @@ jobs:
     outputs:
       ASSEMBLY_VERSION: ${{ steps.set_version.outputs.VERSION }}.0.0 # The version of the assembly to use: 1.0.0.0
       DOTNET_VERSION: ${{ env.DOTNET_VERSION }} # The version of dotnet to use.
-      NUGET_VERSION: ${{ steps.set_version.outputs.VERSION }}.${{ steps.set_version.outputs.THIRD }}${{ github.ref != 'refs/heads/master' && '-prerelease-' || '' }}${{ github.ref != 'refs/heads/main' && steps.set_version.outputs.SHORT_COMMIT_HASH || '' }}
+      NUGET_VERSION: ${{ steps.set_version.outputs.VERSION }}.${{ steps.set_version.outputs.THIRD }}${{ github.ref != 'refs/heads/main' && '-prerelease-' || '' }}${{ github.ref != 'refs/heads/main' && steps.set_version.outputs.SHORT_COMMIT_HASH || '' }}
       VERSION: ${{ steps.set_version.outputs.VERSION }}.${{ steps.set_version.outputs.THIRD }} # The version with the run number in the 3rd position.
     steps:
     - name: Git clone the repository
@@ -81,7 +81,7 @@ jobs:
       - name: Restoring NuGet packages
         run: dotnet restore
          
-      # Build - Main
+      # Build
       - name: Build source
         run: dotnet build --configuration Release --no-restore -p:AssemblyVersion=${{ needs.find_version.outputs.ASSEMBLY_VERSION }} -p:FileVersion=${{ needs.find_version.outputs.VERSION }} -p:Version=${{ needs.find_version.outputs.VERSION }} -p:PackageVersion=${{ needs.find_version.outputs.NUGET_VERSION }} -p:RepositoryBranch=${{ github.ref_name }} -p:RepositoryCommit=${{ env.COMMIT_HASH }}
           
